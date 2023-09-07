@@ -20,11 +20,11 @@ const createItem = asyncWrapper(async (req, res) => {
   const {
     item_name,
     manufacturer,
-    package_quantity,
     price,
-    shipping_weight,
     category,
     description,
+    clothing_type,
+    size,
   } = req.body
   const file = req.file
 
@@ -37,11 +37,11 @@ const createItem = asyncWrapper(async (req, res) => {
     const newItem = new Item({
       item_name,
       manufacturer,
-      package_quantity,
       price,
-      shipping_weight,
       category,
       description,
+      clothing_type,
+      size,
       image: image, // Assign the single image URL directly
     })
 
@@ -103,6 +103,8 @@ const getAllItems = async (req, res) => {
     manufacturer,
     item_name,
     category,
+    clothing_type,
+    size,
     sort,
     fields,
     numericFilters,
@@ -125,6 +127,14 @@ const getAllItems = async (req, res) => {
     queryObject.category = category
   }
 
+  if (clothing_type) {
+    queryObject.clothing_type = clothing_type
+  }
+
+  if (size) {
+    queryObject.size = size
+  }
+
   if (numericFilters) {
     const operatorMap = {
       '>': '$gt',
@@ -138,7 +148,7 @@ const getAllItems = async (req, res) => {
       regEx,
       (match) => `-${operatorMap[match]}-`
     )
-    const options = ['price', 'rating', 'package_quantity']
+    const options = ['price', 'rating']
     filters = filters.split(',').forEach((item) => {
       const [field, operator, value] = item.split('-')
       if (options.includes(field)) {

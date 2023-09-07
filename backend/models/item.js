@@ -16,11 +16,6 @@ const ItemSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    package_quantity: {
-      type: Number,
-      required: [true, 'must provide product package quantity'],
-      min: [1, 'package must contain at least 1 product, got {VALUE}'],
-    },
     price: {
       type: Number,
       required: [true, 'must provide product price'],
@@ -29,34 +24,47 @@ const ItemSchema = new mongoose.Schema(
         'product price should be more than 0, {VALUE} is not greater than 0',
       ],
     },
-    shipping_weight: {
-      type: String,
-      required: [true, 'must provide product package shipping weight'],
-      trim: true,
-    },
     category: {
       type: String,
       required: [true, 'must provide product category'],
       trim: true,
       enum: {
         values: [
-          'Supplements and Herbs',
+          'Tshirts',
           'Sports',
-          'Beauty',
-          'Bath and Personal Care',
-          'Grocery',
-          'Home',
-          'Medicine',
-          'Pets',
-          'Babies and Kids',
+          'Shorts',
+          'Plus Size',
+          'Hoodies',
+          'Jackets',
+          'Pants',
+          'Underwear',
+          'Socks',
         ],
         message: '{VALUE} is not a valid category',
       },
     },
     description: {
       type: String,
-      required: [true, 'must provide product description'],
+      required: [true, 'must provide item description'],
       trim: true,
+    },
+    clothing_type: {
+      type: String,
+      required: [true, 'must provide item type'],
+      trim: true,
+      enum: {
+        values: ['Men', 'Women', 'Unisex'],
+        message: '{VALUE} is not a valid type',
+      },
+    },
+    size: {
+      type: String,
+      required: [true, 'must provide item size'],
+      trim: true,
+      enum: {
+        values: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL'],
+        message: '{VALUE} is not a valid type',
+      },
     },
     rating: {
       type: Number,
