@@ -4,8 +4,12 @@ import helmet from 'helmet'
 import cors from 'cors'
 import xss from 'xss-clean'
 import rateLimiter from 'express-rate-limit'
+
 import connectDB from './db/connect.js'
+
 import itemRouter from './routes/item.js'
+import cartRouter from './routes/cart.js'
+
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandlerMiddleware from './middleware/error-handler.js'
 
@@ -29,6 +33,7 @@ app.use('/uploads', express.static('uploads'))
 
 // Define your routes
 app.use('/api/v1/items', itemRouter)
+app.use('/api/v1/cart', cartRouter)
 // app.use('/api/v1/seller', sellerRouter)
 
 // Error handling middleware
