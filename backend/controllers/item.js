@@ -1,4 +1,5 @@
 import Item from '../models/item.js'
+import Recommendation from '../models/recommendation.js'
 import asyncWrapper from '../middleware/async.js'
 import cloudinary from '../config/cloudinary.js'
 import { createCustomError } from '../errors/custom-error.js'
@@ -47,6 +48,18 @@ const createItem = asyncWrapper(async (req, res) => {
 
     await newItem.save()
     res.json(newItem)
+
+    // create a new recommendation with checking image file
+    const item = newItem.id
+    try {
+      const newRecommendation = new Recommendation({
+        item,
+      })
+
+      await newRecommendation.save()
+    } catch (error) {
+      console.error(error)
+    }
   } catch (error) {
     console.error(error)
     res.status(500).send('Server error')
@@ -70,8 +83,14 @@ const getItem = asyncWrapper(async (req, res, next) => {
 const deleteItem = asyncWrapper(async (req, res, next) => {
   const { id: itemID } = req.params
   const item = await Item.findOneAndDelete({ _id: itemID })
+  const recommendation = await Recommendation.findOneAndDelete({ item: itemID })
   if (!item) {
     return next(createCustomError(`No item with id: ${itemID}`, 404))
+  }
+  if (!recommendation) {
+    return next(
+      createCustomError(`No recommendation with item id: ${itemID}`, 404)
+    )
   }
   res.status(200).json({ item })
 })
