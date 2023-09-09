@@ -2,9 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaShoppingCart } from 'react-icons/fa'
 
+const handelrecommandation = (itemId) => {
+  axios
+    .patch(`http://localhost:4000/api/v1/recommendations/${itemId}`)
+    .then((res) => {
+      console.log(res.data.message)
+    })
+    .catch((err) => {
+      alert(err.message)
+    })
+}
+
 const Product = ({
   image,
-  product_name,
+  item_name,
   manufacturer,
   id,
   price,
@@ -18,12 +29,12 @@ const Product = ({
           class="w-full h-[310px] p-8 rounded-t-lg"
           crossOrigin="anonymous"
           src={image}
-          alt={product_name}
+          alt={item_name}
         />
       </a>
       <div class="px-5 pb-5">
         <h5 class="h-[50px] text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-          {manufacturer}, {product_name}
+          {manufacturer}, {item_name}
         </h5>
         <div class="flex items-center mt-2.5 mb-5">
           <svg
@@ -47,7 +58,11 @@ const Product = ({
           <span class="text-3xl font-bold text-gray-900 dark:text-white">
             LKR {price}.00
           </span>
-          <Link class="hover:no-underline" to={`/product/${id}`}>
+          <Link
+            class="hover:no-underline"
+            to={`/item/${id}`}
+            onClick={handelrecommandation}
+          >
             <div class="w-[125px] font-sans bg-[rgb(33,190,33)] hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
               View Details
             </div>

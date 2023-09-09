@@ -20,7 +20,7 @@ export default function ShoppingCart() {
           ? {
               ...cart,
               quantity: newQuantity,
-              totalPrice: newQuantity * cart.product.price,
+              totalPrice: newQuantity * cart.item.price,
             }
           : cart
       )
@@ -33,7 +33,7 @@ export default function ShoppingCart() {
     )
     if (confirmDelete) {
       axios
-        .delete(`http://localhost:3003/api/v1/cart/${itemId}`)
+        .delete(`http://localhost:4000/api/v1/cart/${itemId}`)
         .then((res) => {
           console.log(res.data.message)
           SetCarts((prevCarts) =>
@@ -54,7 +54,7 @@ export default function ShoppingCart() {
     )
     if (confirmDelete) {
       axios
-        .delete('http://localhost:3003/api/v1/cart')
+        .delete('http://localhost:4000/api/v1/cart')
         .then((res) => {
           console.log(res.data.message)
           setIsDataFetched(false)
@@ -68,13 +68,13 @@ export default function ShoppingCart() {
   useEffect(() => {
     function getCarts() {
       axios
-        .get('http://localhost:3003/api/v1/cart')
+        .get('http://localhost:4000/api/v1/cart')
         .then((res) => {
           console.log(res.data.carts)
           SetCarts(
             res.data.items.map((item) => ({
               ...item,
-              totalPrice: item.product.price,
+              totalPrice: item.item.price,
             }))
           )
           setIsDataFetched(true)
@@ -153,18 +153,18 @@ export default function ShoppingCart() {
                             <img
                               class="h-20 w-20 "
                               crossOrigin="anonymous"
-                              src={cart.product.image}
+                              src={cart.item.image}
                               alt=""
                             ></img>
                           </div>
 
                           <div class="ml-4">
                             <div class="text-[6] font-medium text-gray-900">
-                              {cart.product.product_name}
+                              {cart.item.item_name}
                             </div>
                             <div class="text-[12px]">
-                              Manufacturer: {cart.product.manufacturer}
-                              <br></br>Weight:{cart.product.shipping_weight}
+                              Manufacturer: {cart.item.manufacturer}
+                              <br></br>
                             </div>
                             {/* Reomve btn for cart item remove */}
                             <button
@@ -178,7 +178,7 @@ export default function ShoppingCart() {
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
                         <span class="text-gray-900 font-medium">
-                          Rs.{cart.product.price.toFixed(2)}
+                          Rs.{cart.item.price.toFixed(2)}
                         </span>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">

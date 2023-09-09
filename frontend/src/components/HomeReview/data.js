@@ -3,33 +3,33 @@ const people = [
     id: 1,
     image:
       'https://res.cloudinary.com/dbcmklrpv/image/twitter_name/AntoGriexmann',
-    name: 'Antoine Griezmann',
+    name: 'Sanjeewa Fernando',
     quote:
-      "AyurVeda helped me a lot on my professional diet and medication. Their app intoduced me to many products which I'm now a fan of. Their delivery is also on time.",
+      'Wow! This fashion store is a hidden gem. From trendy streetwear to elegant evening dresses, they have it all. The quality is top-notch, and the staff is incredibly helpful. I always find something unique to add to my wardrobe.',
   },
   {
     id: 2,
     image:
       'https://res.cloudinary.com/dbcmklrpv/image/twitter_name/MaithripalaS',
-    name: 'Maithripala Sirisena',
+    name: 'Nimal Perera',
     quote:
-      "Usually I sleep at 10 p.m. To enhance my focus and to be awake, I purchased a product to keep me awake from AyurVeda. Now I'm very active. Highly recommended.",
+      'This store offers a great selection of clothing for both men and women. I found some stylish pieces for work, and the prices were reasonable. The only downside is that it can get a bit crowded during peak hours.',
   },
   {
     id: 3,
     image:
       'https://res.cloudinary.com/dbcmklrpv/image/twitter_name/PresRajapaksa',
-    name: 'Mahinda Rajapaksha',
+    name: 'Shalini Rajapaksha',
     quote:
-      "I'm too weak for my age even to keep standing for a while. I purchased a portion from AyurVeda to sustain myself and the results were exceptional. I highly recommend AyurVeda. Their customer service is exceptional.",
+      "I love shopping here! The atmosphere is chic, and the decor is Instagram-worthy. Their collection of accessories is fantastic, and I've scored some amazing deals during their sales. A must-visit for fashion enthusiasts.",
   },
   {
     id: 4,
     image:
       'https://res.cloudinary.com/dbcmklrpv/image/twitter_name/KumarSanga2',
-    name: 'Kumar Sangakkara',
+    name: 'Roshan Sangakkara',
     quote:
-      'As a retired cricketer I needed to maintain my physique. But it is not easy to keep my self fit with my age. I got to know about AyurVeda from one of my friends and I purchased some products. Those products really helped',
+      'This store has a decent range of clothing, but I wish they had more options for plus-sized individuals. The staff was friendly, though, and I managed to find a couple of stylish pieces in my size.',
   },
 ]
 

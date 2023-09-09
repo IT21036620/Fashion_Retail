@@ -10,11 +10,11 @@ import Navbar from '../../components/navbar'
 import ReviewForm from '../../components/Reviews/createReviews'
 import ProductReviewList from '../../components/Reviews/productReviews'
 
-const url = 'http://localhost:3008/api/v1/products/singleProduct/'
-const productRating = 'http://localhost:3008/api/v1/products/productRating/'
+const url = 'http://localhost:4000/api/v1/items/'
+const productRating = 'localhost:4000/api/v1/items/productRating/'
 const sellerRating = 'http://localhost:3008/api/v1/seller/sellerRating/'
 const sellerUrl = 'http://localhost:3008/api/v1/seller/'
-const cartUrl = 'http://localhost:3003/api/v1/cart'
+const cartUrl = 'http://localhost:4000/api/v1/cart'
 
 const createMarkup = (text) => {
   return { __html: text }
@@ -38,40 +38,30 @@ const SingleProduct = () => {
         const data = await response.json()
         //console.log(data.product)
         // const data = response
-        if (data.product) {
+        if (data.item) {
           const {
             availability: availability,
             rating: rating,
-            product_name: product_name,
+            item_name: item_name,
             manufacturer: manufacturer,
-            package_quantity: package_quantity,
             price: price,
-            mfd: mfd,
-            exp: exp,
-            shipping_weight: shipping_weight,
             category: category,
             description: description,
             image: image,
             rate_count: rate_count,
-            createdBy: createdBy,
             rate_aggregate: rate_aggregate,
-          } = data.product
+          } = data.item
 
           const newProduct = {
             availability,
             rating,
-            product_name,
+            item_name,
             manufacturer,
-            package_quantity,
             price,
-            mfd,
-            exp,
-            shipping_weight,
             category,
             description,
             image,
             rate_count,
-            createdBy,
             rate_aggregate,
           }
           setProduct(newProduct)
@@ -94,7 +84,7 @@ const SingleProduct = () => {
     return <h2 className="section-title">No Product to display</h2>
   }
   const {
-    product_name,
+    item_name,
     image,
     category,
     description,
@@ -102,15 +92,10 @@ const SingleProduct = () => {
     manufacturer,
     rating,
     rate_count,
-    package_quantity,
-    mfd,
-    exp,
-    shipping_weight,
-    createdBy,
     rate_aggregate,
   } = product
 
-  console.log(createdBy)
+  // console.log(createdBy)
 
   const inputProps = {
     min: 1,
@@ -127,26 +112,26 @@ const SingleProduct = () => {
       })
   }
 
-  const rateSeller = () => {
-    axios
-      .patch(`${sellerRating}${createdBy}`, {
-        rating: rate_seller,
-      })
-      .then(({ data }) => {
-        console.log(data)
-      })
-  }
+  // const rateSeller = () => {
+  //   axios
+  //     .patch(`${sellerRating}${createdBy}`, {
+  //       rating: rate_seller,
+  //     })
+  //     .then(({ data }) => {
+  //       console.log(data)
+  //     })
+  // }
 
-  const fetchSeller = async () => {
-    try {
-      const response = await axios(`${sellerUrl}${createdBy}`)
-      console.log(response)
-      setNewSellerRating(response.data.seller.rating)
-      setSRateCount(response.data.seller.rate_count)
-    } catch (error) {
-      console.log(error.response)
-    }
-  }
+  // const fetchSeller = async () => {
+  //   try {
+  //     const response = await axios(`${sellerUrl}${createdBy}`)
+  //     console.log(response)
+  //     setNewSellerRating(response.data.seller.rating)
+  //     setSRateCount(response.data.seller.rate_count)
+  //   } catch (error) {
+  //     console.log(error.response)
+  //   }
+  // }
 
   // console.log(window.location.href.substring(0, 21))
   // console.log(window.location.port) //3000
@@ -177,7 +162,7 @@ const SingleProduct = () => {
         cartUrl,
         {
           user: '5',
-          product: id,
+          item: id,
           quantity: quantity,
           price: totPrice,
         },
@@ -197,18 +182,18 @@ const SingleProduct = () => {
   }
 
   return (
-    <div onLoad={fetchSeller}>
+    <div>
       {/* <Navbar name="Sunil Perera" /> */}
       <div class="md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
         <div class="xl:w-2/6 lg:w-2/5 w-80 md:block hidden">
-          <img class="mt-[80px] w-full" alt={product_name} src={image} />
+          <img class="mt-[80px] w-full" alt={item_name} src={image} />
           <div className="mt-[40px] w-full max-w-md bg-white rounded-lg shadow-lg p-6 mb-2 mx-auto">
             <ProductReviewList productId={id} />
             <ReviewForm productId={id} buyerId="6442335c26c1890f7a771907" />
           </div>
         </div>
         <div class="md:hidden">
-          <img class="w-full" alt={product_name} src={image} />
+          <img class="w-full" alt={item_name} src={image} />
         </div>
         {/* <div class="md:flex items-center justify-center py-12 2xl:px-20 md:px-6 px-4">
           <img class="w-[600px]" alt={product_name} src={image} />
@@ -216,7 +201,7 @@ const SingleProduct = () => {
         <div class="xl:w-2/5 md:w-1/2 lg:ml-8 md:ml-6 md:mt-0 mt-6">
           <div class="border-b border-green-400 pb-6">
             <h1 class="mt-[20px] lg:text-3xl text-3xl font-semibold lg:leading-6 leading-7 text-gray-800 dark:text-white mt-2">
-              {product_name}
+              {item_name}
             </h1>
             <div class="mt-[20px] text-black dark:text-white">
               <i>"{description}"</i>
@@ -242,7 +227,7 @@ const SingleProduct = () => {
               </p>
             </div>
           </div>
-          <div class="py-4 border-b border-green-400 flex items-center justify-between">
+          {/* <div class="py-4 border-b border-green-400 flex items-center justify-between">
             <p class="text-base leading-4 text-gray-800 dark:text-gray-300">
               Package Quantity
             </p>
@@ -251,8 +236,8 @@ const SingleProduct = () => {
                 {package_quantity}
               </p>
             </div>
-          </div>
-          <div class="py-4 border-b border-green-400 flex items-center justify-between">
+          </div> */}
+          {/* <div class="py-4 border-b border-green-400 flex items-center justify-between">
             <p class="text-base leading-4 text-gray-800 dark:text-gray-300">
               Shipping Weight
             </p>
@@ -261,8 +246,8 @@ const SingleProduct = () => {
                 {shipping_weight}
               </p>
             </div>
-          </div>
-          <div class="py-4 border-b border-green-400 flex items-center justify-between">
+          </div> */}
+          {/* <div class="py-4 border-b border-green-400 flex items-center justify-between">
             <p class="text-base leading-4 text-gray-800 dark:text-gray-300">
               Date First Available
             </p>
@@ -281,7 +266,7 @@ const SingleProduct = () => {
                 {exp.substring(0, 10)}
               </p>
             </div>
-          </div>
+          </div> */}
           <div class="py-4 border-b border-green-400 flex items-center justify-between">
             <p class="text-base leading-4 text-gray-800 dark:text-gray-300">
               Product Rating

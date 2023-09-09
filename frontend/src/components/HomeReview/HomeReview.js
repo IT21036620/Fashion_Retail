@@ -26,7 +26,7 @@ function HomeReview() {
   return (
     <section className="sections">
       <div className="title">
-        <h2>reviews on AyurVeda</h2>
+        <h2>reviews on FASHIONstore</h2>
         <div className="underline"></div>
       </div>
       <div className="section-center">

@@ -22,7 +22,7 @@ const Navbar = ({ name }) => {
 
         <div className="flex space-x-5 px-2">
           <div className="relative group inline-block">
-            <button className="text-white text-xl">Categories</button>
+            <button className="text-white text-xl">Clothing Type</button>
             <div className="absolute left-0 mt-2 w-48 bg-white text-green-700 rounded-lg shadow-md hidden group-hover:block">
               <a href="#" className="block px-4 py-2">
                 Men
@@ -31,10 +31,7 @@ const Navbar = ({ name }) => {
                 Women
               </a>
               <a href="#" className="block px-4 py-2">
-                Kids & Baby
-              </a>
-              <a href="#" className="block px-4 py-2">
-                Home & Living
+                Unisex
               </a>
             </div>
           </div>

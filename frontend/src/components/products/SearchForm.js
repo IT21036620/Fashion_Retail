@@ -45,10 +45,15 @@ const SearchForm = () => {
             onChange={searchCat}
           >
             <option value="">All Categories</option>
-            <option value="Supplements and Herbs">Men</option>
-            <option value="Sports Nutrition">Women</option>
-            <option value="Beauty">Kids & Baby</option>
-            <option value="Bath and Personal Care">Home & Living</option>
+            <option value="Tshirts">Tshirts</option>
+            <option value="Sports">Sports</option>
+            <option value="Shorts">Shorts</option>
+            <option value="Plus Size">Plus Size</option>
+            <option value="Hoodies">Hoodies</option>
+            <option value="Jackets">Jackets</option>
+            <option value="Pants">Pants</option>
+            <option value="Underwear">Underwear</option>
+            <option value="Socks">Socks</option>
           </select>
           <div class="relative w-full">
             <input

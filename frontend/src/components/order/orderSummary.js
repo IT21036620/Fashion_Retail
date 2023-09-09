@@ -18,7 +18,7 @@ export default function OrderSummary() {
   const fetchCommission = async (totalPrice) => {
     try {
       const response = await axios.post(
-        'http://localhost:3003/api/v1/cart/commission',
+        'http://localhost:4000/api/v1/cart/commission',
         {
           totalPrice,
         }
@@ -46,7 +46,7 @@ export default function OrderSummary() {
     const data = { userID: '6442335c26c1890f7a771907' }
 
     const response = await axios.post(
-      'http://localhost:3003/api/v1/cart/cartcomplete',
+      'http://localhost:4000/api/v1/cart/cartcomplete',
       data
     )
 
@@ -61,7 +61,7 @@ export default function OrderSummary() {
     }
 
     const response2 = await axios.post(
-      'http://localhost:3006/api/v1/orders',
+      'http://localhost:4000/api/v1/orders',
       data2
     )
 

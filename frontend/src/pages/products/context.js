@@ -2,8 +2,8 @@ import React, { useState, useContext, useEffect } from 'react'
 import { useCallback } from 'react'
 import axios from 'axios'
 
-const url = 'http://localhost:3008/api/v1/products'
-const search = 'http://localhost:3008/api/v1/products?product_name='
+const url = 'http://localhost:4000/api/v1/items'
+const search = 'http://localhost:4000/api/v1/items?item_name='
 const cat = '&category='
 
 const AppContext = React.createContext()
@@ -20,42 +20,36 @@ const AppProvider = ({ children }) => {
       const response = await fetch(`${search}${searchTerm}${cat}${searchCat}`)
       const data = await response.json()
       // const data = response
-      const { products } = data
-      if (products) {
-        const newProducts = products.map((item) => {
+      const { items } = data
+      if (items) {
+        const newProducts = items.map((item) => {
           const {
             _id,
             availability,
             rating,
-            product_name,
+            item_name,
             manufacturer,
-            package_quantity,
             price,
-            mfd,
-            exp,
-            shipping_weight,
             category,
+            clothing_type,
             description,
             image,
+            size,
             rate_count,
-            createdBy,
           } = item
           return {
             id: _id,
             availability,
             rating,
-            product_name,
+            item_name,
             manufacturer,
-            package_quantity,
             price,
-            mfd,
-            exp,
-            shipping_weight,
             category,
+            clothing_type,
             description,
             image,
+            size,
             rate_count,
-            createdBy,
           }
         })
         setProducts(newProducts)
