@@ -16,7 +16,7 @@ export default function Sidebar() {
     <div className="bg-neutral-900 w-60 p-3 flex flex-col text-white">
       <div className="flex items-center gap-2 px-1 py-3">
         <FaLeaf fontSize={24} color="#016a00" />
-        <span className="text-neutral-100 text-lg">AyurVeda</span>
+        <span className="text-neutral-100 text-lg">FASHIONstore</span>
       </div>
       <div className="flex-1 py-2 flex flex-col gap-0.5">
         {DASHBOARD_SIDEBAR_LINKS.map((item) => (
