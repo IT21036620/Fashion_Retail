@@ -327,7 +327,7 @@ const SingleProduct = () => {
                   variant="contained"
                   className="rate-seller"
                   onClick={() => {
-                    rateSeller()
+                    // rateSeller()
                     setLoading(true)
                     window.location.reload(true)
                     setLoading(false)
