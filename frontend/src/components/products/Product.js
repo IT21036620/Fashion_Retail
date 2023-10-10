@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaShoppingCart } from 'react-icons/fa'
+import axios from 'axios'
 
 const handelrecommandation = (itemId) => {
   axios
