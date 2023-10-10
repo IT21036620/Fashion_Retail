@@ -33,7 +33,7 @@ app.use(cors())
 app.use(xss())
 app.use('/uploads', express.static('uploads'))
 
-//Test Client IP
+//console Client IP
 // app.use((req, res, next) => {
 //   const clientIP = req.ip
 //   console.log(`Client IP: ${clientIP}`)
