@@ -22,13 +22,13 @@ const Home = () => {
         showStatus={false}
       >
         <div>
-          <img class="h-[700px]" src={img} alt="Slide 1" />
+          <img class="h-[600px]" src={img} alt="Slide 1" />
         </div>
         <div>
-          <img class="h-[700px]" src={img2} alt="Slide 2" />
+          <img class="h-[600px]" src={img2} alt="Slide 2" />
         </div>
         <div>
-          <img class="h-[700px]" src={img3} alt="Slide 3" />
+          <img class="h-[600px]" src={img3} alt="Slide 3" />
         </div>
       </Carousel>
       <FeaturedProducts />
