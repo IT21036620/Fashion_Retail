@@ -8,13 +8,13 @@ import RequireAuth from '../components/login/RequireAuth'
 export default function adminRoutes() {
   return (
     <Routes>
-      <Route element={<RequireAuth allowedRole={'admin'} />}>
-        <Route path="/admin" element={<Layout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="sellers" element={<Sellers />} />
-          <Route path="order" element={<ViewOrder />} />
-        </Route>
+      {/* <Route element={<RequireAuth allowedRole={'admin'} />}> */}
+      <Route path="/admin" element={<Layout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="sellers" element={<Sellers />} />
+        <Route path="order" element={<ViewOrder />} />
       </Route>
+      {/* </Route> */}
     </Routes>
   )
 }
