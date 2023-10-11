@@ -76,6 +76,8 @@ const insertcartcompletedetails = asyncWrapper(async (req, res) => {
 const getCartItemsbycusid = asyncWrapper(async (req, res, next) => {
   const { id: userId } = req.params
   const items = await Cart.find({ customer: userId })
+    .populate('item')
+    .populate('customer')
 
   if (!items) {
     return next(createCustomError(`No Cart item with id: ${userId}`, 404))
@@ -87,6 +89,13 @@ const getCartItemsbycusid = asyncWrapper(async (req, res, next) => {
 const getCompelteCartItemsbycartid = asyncWrapper(async (req, res, next) => {
   const { id: cartID } = req.params
   const items = await CartComplete.findOne({ _id: cartID })
+    .populate({
+      path: 'items',
+      populate: {
+        path: 'item',
+      },
+    })
+    .populate('customer')
 
   if (!items) {
     return next(createCustomError(`No Cart with id: ${cartID}`, 404))
