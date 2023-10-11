@@ -1,5 +1,6 @@
 import Item from '../models/item.js'
 import Recommendation from '../models/recommendation.js'
+import ItemPurchase from '../models/ItemPurchase.js'
 import asyncWrapper from '../middleware/async.js'
 import cloudinary from '../config/cloudinary.js'
 import { createCustomError } from '../errors/custom-error.js'
@@ -60,6 +61,17 @@ const createItem = asyncWrapper(async (req, res) => {
     } catch (error) {
       console.error(error)
     }
+
+    // create a new itemPurchase with checking image file
+    try {
+      const newItemPurchase = new ItemPurchase({
+        item,
+      })
+
+      await newItemPurchase.save()
+    } catch (error) {
+      console.error(error)
+    }
   } catch (error) {
     console.error(error)
     res.status(500).send('Server error')
@@ -84,12 +96,16 @@ const deleteItem = asyncWrapper(async (req, res, next) => {
   const { id: itemID } = req.params
   const item = await Item.findOneAndDelete({ _id: itemID })
   const recommendation = await Recommendation.findOneAndDelete({ item: itemID })
+  const itemPurchase = await ItemPurchase.findOneAndDelete({ item: itemID })
   if (!item) {
     return next(createCustomError(`No item with id: ${itemID}`, 404))
   }
-  if (!recommendation) {
+  if (!recommendation || !itemPurchase) {
     return next(
-      createCustomError(`No recommendation with item id: ${itemID}`, 404)
+      createCustomError(
+        `No recommendation or item purchase with item id: ${itemID}`,
+        404
+      )
     )
   }
   res.status(200).json({ item })

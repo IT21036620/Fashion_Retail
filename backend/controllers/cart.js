@@ -1,5 +1,6 @@
 import Cart from '../models/cart.js'
 import CartComplete from '../models/CartComplete.js'
+import ShoppingCart from '../models/ShoppingCart.js'
 import asyncWrapper from '../middleware/async.js'
 import { createCustomError } from '../errors/custom-error.js'
 import dotenv from 'dotenv'
@@ -12,12 +13,14 @@ const getAllCartItems = asyncWrapper(async (req, res) => {
       updatedAt: 1,
     })
     .populate('item')
+    .populate('customer')
   res.status(200).json({ items })
 })
 
 // This is used to add a single iteam (Product) to cart
 const createCartItem = asyncWrapper(async (req, res) => {
   const item = await Cart.create(req.body)
+  await item.populate('item customer').execPopulate()
   res.status(201).json({ item })
 })
 
@@ -82,6 +85,7 @@ const getCartItemsbycusid = asyncWrapper(async (req, res, next) => {
   if (!items) {
     return next(createCustomError(`No Cart item with id: ${userId}`, 404))
   }
+
   res.status(200).json({ items })
 })
 
@@ -111,6 +115,8 @@ const updateCartItems = asyncWrapper(async (req, res) => {
     new: true,
     runValidators: true,
   })
+    .populate('item')
+    .populate('customer')
 
   if (!item) {
     return next(createCustomError(`No Order with this id: ${cartID}`, 404))
@@ -123,6 +129,8 @@ const updateCartItems = asyncWrapper(async (req, res) => {
 const deleteCartItem = asyncWrapper(async (req, res) => {
   const { id: cartID } = req.params
   const item = await Cart.findOneAndDelete({ _id: cartID })
+    .populate('item')
+    .populate('customer')
   if (!item) {
     return next(createCustomError(`No Order with this id: ${cartID}`, 404))
   }
