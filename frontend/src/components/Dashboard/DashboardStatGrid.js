@@ -11,6 +11,7 @@ export default function DashboardStatGrid() {
   const [items, SetItems] = useState([])
   const [categoryReach, SetCategoryReach] = useState([])
   const [itemReachs, SetItemReach] = useState([])
+  const [revenues, SetRevenue] = useState([])
 
   const [data, setData] = useState({
     categoryReachObject: [],
@@ -90,6 +91,21 @@ export default function DashboardStatGrid() {
     getItems()
   }, [])
 
+  useEffect(() => {
+    function getRevenue() {
+      axios
+        .get('http://localhost:4000/api/v1/totalSales')
+        .then((res) => {
+          SetRevenue(res.data)
+        })
+        .catch((err) => {
+          alert(err.message)
+        })
+    }
+
+    getRevenue()
+  }, [])
+
   const exportToExcel = () => {
     const ws = XLSX.utils.json_to_sheet(itemReachs)
     const wb = XLSX.utils.book_new()
@@ -163,60 +179,60 @@ export default function DashboardStatGrid() {
         </BoxWrapper>
       </div>
 
-      <div>
-        {/* pie chart */}
-        <div className="flex justify-center items-center h-screen">
+      <div className="flex mt-4 gap-4">
+        {/* Pie Chart */}
+        <div className="flex-1 flex justify-center items-center h-[400px] w-[500px]">
           <PieChartComponent data={data} />
         </div>
-      </div>
 
-      <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
-        <div className="flex justify-between items-center">
-          <strong className="text-gray-700 font-medium">
-            Top Reached Items
-          </strong>
-
-          <button
-            onClick={exportToExcel}
-            className="bg-blue-500 text-white px-4 py-2 rounded "
-          >
-            Export
-          </button>
-        </div>
-        <div className="border-x border-gray-200 rounded-sm mt-3">
-          <table className="w-full text-gray-700">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Item Name</th>
-                <th>Image</th>
-                <th>Category</th>
-                <th>Reach Count</th>
-              </tr>
-            </thead>
-            <tbody>
-              {itemReachs.map((itemReach, index) => (
-                <tr key={itemReach._id}>
-                  <td>{index + 1}</td>
-                  <td>{itemReach.item.item_name}</td>
-                  <td>
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 h-20 w-20">
-                        <img
-                          class="h-20 w-20 "
-                          crossOrigin="anonymous"
-                          src={itemReach.item.image}
-                          alt=""
-                        ></img>
-                      </div>
-                    </div>
-                  </td>
-                  <td>{itemReach.item.category}</td>
-                  <td>{itemReach.reach_count}</td>
+        {/* Table */}
+        <div className="flex-1 bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200">
+          <div className="flex justify-between items-center">
+            <strong className="text-gray-700 font-medium">
+              Top Reached Items
+            </strong>
+            <button
+              onClick={exportToExcel}
+              className="bg-blue-500 text-white px-4 py-2 rounded "
+            >
+              Export
+            </button>
+          </div>
+          <div className="border-x border-gray-200 rounded-sm mt-3">
+            <table className="w-full text-gray-700">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Item Name</th>
+                  <th>Image</th>
+                  <th>Category</th>
+                  <th>Reach Count</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {itemReachs.map((itemReach, index) => (
+                  <tr key={itemReach._id}>
+                    <td>{index + 1}</td>
+                    <td>{itemReach.item.item_name}</td>
+                    <td>
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 h-20 w-20">
+                          <img
+                            className="h-20 w-20 "
+                            crossOrigin="anonymous"
+                            src={itemReach.item.image}
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td>{itemReach.item.category}</td>
+                    <td>{itemReach.reach_count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
