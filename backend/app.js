@@ -9,7 +9,7 @@ import connectDB from './db/connect.js'
 
 import itemRouter from './routes/item.js'
 import cartRouter from './routes/cart.js'
-import recommendationRouter from './routes/recommendation.js'
+import itemReachRouter from './routes/recommendation.js'
 import customerRouter from './routes/customer.js'
 import adminRouter from './routes/admin.js'
 import analytics from './routes/analytics.js'
@@ -47,7 +47,7 @@ app.use('/uploads', express.static('uploads'))
 // Define your routes
 app.use('/api/v1/items', itemRouter)
 app.use('/api/v1/cart', cartRouter)
-app.use('/api/v1/recommendations', recommendationRouter)
+app.use('/api/v1/item-reach', itemReachRouter)
 app.use('/api/v1/customer', customerRouter)
 app.use('/api/v1/admin', adminRouter)
 app.use('/api/v1/analytics', analytics)

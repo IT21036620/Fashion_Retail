@@ -5,6 +5,13 @@ import { createCustomError } from '../errors/custom-error.js'
 // This is used to get all orders
 const getAllOrders = asyncWrapper(async (req, res) => {
   const orders = await Order.find({})
+    .populate({
+      path: 'cartComplete',
+      populate: {
+        path: 'items.item',
+      },
+    })
+    .populate('customer')
   res.status(200).json({ orders, count: orders.length })
 })
 
@@ -18,6 +25,13 @@ const createOrder = asyncWrapper(async (req, res) => {
 const getAllOrdersByCustomerId = asyncWrapper(async (req, res, next) => {
   const { id: userId } = req.params
   const orders = await Order.find({ customer: userId })
+    .populate({
+      path: 'cartComplete',
+      populate: {
+        path: 'items.item',
+      },
+    })
+    .populate('customer')
 
   if (!orders) {
     return next(createCustomError(`No Orders with customer id: ${userId}`, 404))
@@ -28,7 +42,14 @@ const getAllOrdersByCustomerId = asyncWrapper(async (req, res, next) => {
 // This is used to retriew order by id
 const getOrderById = asyncWrapper(async (req, res, next) => {
   const { id: orderId } = req.params
-  const order = await Order.find({ _id: orderId })
+  const order = await Order.findById(orderId)
+    .populate({
+      path: 'cartComplete',
+      populate: {
+        path: 'items.item',
+      },
+    })
+    .populate('customer')
 
   if (!order) {
     return next(createCustomError(`No Admin with id: ${orderId}`, 404))
