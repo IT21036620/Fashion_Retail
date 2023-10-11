@@ -27,6 +27,8 @@ const createItem = asyncWrapper(async (req, res) => {
     description,
     clothing_type,
     size,
+    cost,
+    available_quantity,
   } = req.body
   const file = req.file
 
@@ -44,6 +46,8 @@ const createItem = asyncWrapper(async (req, res) => {
       description,
       clothing_type,
       size,
+      cost,
+      available_quantity,
       image: image, // Assign the single image URL directly
     })
 
