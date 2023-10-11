@@ -26,7 +26,7 @@ const ItemSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      required: [true, 'must provide product category'],
+      required: [true, 'must provide item category'],
       trim: true,
       enum: {
         values: [
