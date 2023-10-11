@@ -1,4 +1,6 @@
 import Order from '../models/Order.js'
+import ItemPurchase from '../models/ItemPurchase.js'
+import CategoryPurchase from '../models/CategoryPurchase.js'
 import asyncWrapper from '../middleware/async.js'
 import { createCustomError } from '../errors/custom-error.js'
 
@@ -19,6 +21,44 @@ const getAllOrders = asyncWrapper(async (req, res) => {
 const createOrder = asyncWrapper(async (req, res) => {
   const order = await Order.create(req.body)
   res.status(201).json({ order })
+
+  // increment item purchase count by purchase quantity
+  for (const cartItem of order.cartComplete.items) {
+    const item = cartItem.item.id
+    const quantity = cartItem.quantity
+
+    try {
+      const itemPurchase = await ItemPurchase.findOneAndUpdate(
+        { item: item },
+        { $inc: { purchase_count: quantity } },
+        { new: true }
+      )
+      if (!itemPurchase) {
+        return next(createCustomError(`No item purchase with id: ${item}`, 404))
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  // increment category purchase count by purchase quantity
+  for (const cartItem of order.cartComplete.items) {
+    const category = cartItem.item.category
+    const quantity = cartItem.quantity
+
+    try {
+      const categoryPurchase = await CategoryPurchase.findOneAndUpdate(
+        { category: category },
+        { $inc: { purchase_count: quantity } },
+        { new: true }
+      )
+      if (!categoryPurchase) {
+        return next(createCustomError(`No category with id: ${item}`, 404))
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 })
 
 // This is used to retriew all orders by customer id
