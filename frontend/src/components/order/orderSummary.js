@@ -43,7 +43,7 @@ export default function OrderSummary() {
   }
 
   const alertok = async () => {
-    const data = { userID: '6442335c26c1890f7a771907' }
+    const data = { customer: '652630967c05565ff4d7687e' }
 
     const response = await axios.post(
       'http://localhost:4000/api/v1/cart/cartcomplete',
@@ -52,16 +52,12 @@ export default function OrderSummary() {
 
     const custid = response
     const data2 = {
-      order_id: '643ab55dc99c5c2c4c78f55e',
-      deliveryid: '643ab55dc99c5c2c4c78f55e',
-      cartID: '643ab55dc99c5c2c4c78f55e',
-      customerid: '6442335c26c1890f7a771907',
-      status: 'pending',
-      totalPrice: TotalFinal,
+      cartcomplete: '6442335c26c1890f7a771907',
+      customer: '652630967c05565ff4d7687e',
     }
 
     const response2 = await axios.post(
-      'http://localhost:4000/api/v1/orders',
+      'http://localhost:4000/api/v1/order',
       data2
     )
 
