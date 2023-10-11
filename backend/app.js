@@ -17,6 +17,7 @@ import categoryReachRouter from './routes/categoryReach.js'
 import orderRouter from './routes/order.js'
 import itemPurchaseRouter from './routes/itemPurchase.js'
 import categoryPurchaseRouter from './routes/categoryPurchase.js'
+import shoppingCartRouter from './routes/shoppingCart.js'
 
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandlerMiddleware from './middleware/error-handler.js'
@@ -57,6 +58,7 @@ app.use('/api/v1/category-reach', categoryReachRouter)
 app.use('/api/v1/order', orderRouter)
 app.use('/api/v1/item-purchase', itemPurchaseRouter)
 app.use('/api/v1/category-purchase', categoryPurchaseRouter)
+app.use('/api/v1/shoppingCart', shoppingCartRouter)
 
 // Error handling middleware
 app.use(notFoundMiddleware)

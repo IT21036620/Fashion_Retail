@@ -7,11 +7,13 @@ const ShoppingCartSchema = new mongoose.Schema(
       ref: 'Customer',
       required: true,
     },
-    cartItem: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Cart',
-      required: true,
-    },
+    cartItems: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cart',
+        required: true,
+      },
+    ],
     total_price: {
       type: Number,
       required: true,
