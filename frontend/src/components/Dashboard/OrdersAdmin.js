@@ -1,188 +1,90 @@
 import React, { useState, useEffect } from 'react'
-import { format } from 'date-fns'
-import { Link } from 'react-router-dom'
-import { getOrderStatus } from './libs/helpers/statusSelector'
 import axios from 'axios'
 import useAuth from '../../hooks/useAuth'
-
-const recentOrderData = [
-  {
-    id: '1',
-    product_id: '4324',
-    customer_id: '23143',
-    customer_name: 'Shirley A. Lape',
-    order_date: '2022-05-17T03:24:00',
-    order_total: '$435.50',
-    current_order_status: 'PLACED',
-    shipment_address: 'Cottage Grove, OR 97424',
-  },
-  {
-    id: '7',
-    product_id: '7453',
-    customer_id: '96453',
-    customer_name: 'Ryan Carroll',
-    order_date: '2022-05-14T05:24:00',
-    order_total: '$96.35',
-    current_order_status: 'CONFIRMED',
-    shipment_address: 'Los Angeles, CA 90017',
-  },
-  {
-    id: '2',
-    product_id: '5434',
-    customer_id: '65345',
-    customer_name: 'Mason Nash',
-    order_date: '2022-05-17T07:14:00',
-    order_total: '$836.44',
-    current_order_status: 'SHIPPED',
-    shipment_address: 'Westminster, CA 92683',
-  },
-  {
-    id: '3',
-    product_id: '9854',
-    customer_id: '87832',
-    customer_name: 'Luke Parkin',
-    order_date: '2022-05-16T12:40:00',
-    order_total: '$334.50',
-    current_order_status: 'SHIPPED',
-    shipment_address: 'San Mateo, CA 94403',
-  },
-  {
-    id: '4',
-    product_id: '8763',
-    customer_id: '09832',
-    customer_name: 'Anthony Fry',
-    order_date: '2022-05-14T03:24:00',
-    order_total: '$876.00',
-    current_order_status: 'OUT_FOR_DELIVERY',
-    shipment_address: 'San Mateo, CA 94403',
-  },
-  {
-    id: '5',
-    product_id: '5627',
-    customer_id: '97632',
-    customer_name: 'Ryan Carroll',
-    order_date: '2022-05-14T05:24:00',
-    order_total: '$96.35',
-    current_order_status: 'DELIVERED',
-    shipment_address: 'Los Angeles, CA 90017',
-  },
-  {
-    id: '1',
-    product_id: '4324',
-    customer_id: '23143',
-    customer_name: 'Shirley A. Lape',
-    order_date: '2022-05-17T03:24:00',
-    order_total: '$435.50',
-    current_order_status: 'PLACED',
-    shipment_address: 'Cottage Grove, OR 97424',
-  },
-  {
-    id: '7',
-    product_id: '7453',
-    customer_id: '96453',
-    customer_name: 'Ryan Carroll',
-    order_date: '2022-05-14T05:24:00',
-    order_total: '$96.35',
-    current_order_status: 'CONFIRMED',
-    shipment_address: 'Los Angeles, CA 90017',
-  },
-  {
-    id: '2',
-    product_id: '5434',
-    customer_id: '65345',
-    customer_name: 'Mason Nash',
-    order_date: '2022-05-17T07:14:00',
-    order_total: '$836.44',
-    current_order_status: 'SHIPPED',
-    shipment_address: 'Westminster, CA 92683',
-  },
-  {
-    id: '3',
-    product_id: '9854',
-    customer_id: '87832',
-    customer_name: 'Luke Parkin',
-    order_date: '2022-05-16T12:40:00',
-    order_total: '$334.50',
-    current_order_status: 'SHIPPED',
-    shipment_address: 'San Mateo, CA 94403',
-  },
-  {
-    id: '4',
-    product_id: '8763',
-    customer_id: '09832',
-    customer_name: 'Anthony Fry',
-    order_date: '2022-05-14T03:24:00',
-    order_total: '$876.00',
-    current_order_status: 'OUT_FOR_DELIVERY',
-    shipment_address: 'San Mateo, CA 94403',
-  },
-  {
-    id: '5',
-    product_id: '5627',
-    customer_id: '97632',
-    customer_name: 'Ryan Carroll',
-    order_date: '2022-05-14T05:24:00',
-    order_total: '$96.35',
-    current_order_status: 'DELIVERED',
-    shipment_address: 'Los Angeles, CA 90017',
-  },
-]
+import * as XLSX from 'xlsx'
 
 export default function OrdersAdmin() {
-  const [orders, SetOrders] = useState([])
+  const [items, SetItems] = useState([])
   const { auth } = useAuth()
 
   useEffect(() => {
-    function getOrders() {
+    function getItems() {
       axios
-        .get('http://localhost:3006/api/v1/orders', {
-          headers: {
-            Authorization: `Bearer ${auth?.accessToken}`,
-          },
-        })
+        .get('http://localhost:4000/api/v1/items')
         .then((res) => {
-          console.log(res.data.orders)
-          SetOrders(res.data.orders)
+          SetItems(res.data.items)
         })
         .catch((err) => {
           alert(err.message)
         })
     }
 
-    getOrders()
-  }, [orders])
+    getItems()
+  }, [])
+
+  const exportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(items)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, 'Items')
+    XLSX.writeFile(wb, 'items.xlsx')
+  }
 
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
-      <strong className="text-gray-700 font-medium">Recent Orders</strong>
+      <div className="flex justify-between items-center">
+        <strong className="text-gray-700 font-medium">All Items</strong>
+        <a
+          href="/seller/add-product"
+          className="bg-blue-500 text-white px-4 py-2 rounded  inline-block  hover:no-underline"
+        >
+          Add New Item
+        </a>
+
+        <button
+          onClick={exportToExcel}
+          className="bg-blue-500 text-white px-4 py-2 rounded "
+        >
+          Export
+        </button>
+      </div>
       <div className="border-x border-gray-200 rounded-sm mt-3">
         <table className="w-full text-gray-700">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Customer Name</th>
-              <th>Order Date</th>
-              <th>Order Total</th>
-              <th>Destination Address</th>
-              <th>Order Status</th>
-              <th>Action</th>
+              <th>Item Name</th>
+              <th>Image</th>
+              <th>Category</th>
+              <th>Clothing Type</th>
+              <th>Item Manufacturer</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Sizes</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order.order_id}</td>
-                <td>{order?.customerid?.buyerName}</td>
-
-                <td>{format(new Date(order.createdAt), 'dd MMM yyyy')}</td>
-                <td>{order.totalPrice}</td>
-                <td>{order?.deliveryid?.destination_address}</td>
-                <td>{getOrderStatus(order.status)}</td>
+            {items.map((item) => (
+              <tr key={item._id}>
+                <td>{item._id}</td>
+                <td>{item.item_name}</td>
                 <td>
-                  <Link to="order" state={order._id}>
-                    Click
-                  </Link>
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-20 w-20">
+                      <img
+                        class="h-20 w-20 "
+                        crossOrigin="anonymous"
+                        src={item.image}
+                        alt=""
+                      ></img>
+                    </div>
+                  </div>
                 </td>
+                <td>{item.category}</td>
+                <td>{item.clothing_type}</td>
+                <td>{item.manufacturer}</td>
+                <td>{item.description}</td>
+                <td>{item.price}</td>
+                <td>{item.size}</td>
               </tr>
             ))}
           </tbody>
