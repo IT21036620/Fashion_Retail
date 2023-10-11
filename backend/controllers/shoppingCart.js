@@ -11,14 +11,14 @@ const getAllShoppingCarts = asyncWrapper(async (req, res) => {
       updatedAt: 1,
     })
     .populate('customer')
-    .populate('cartItem')
+    .populate('cartItems')
   res.status(200).json({ shoppingCart })
 })
 
 // This is used to add a single iteam (Product) to cart
 const createCartItem = asyncWrapper(async (req, res) => {
   const shoppingCart = await ShoppingCart.create(req.body)
-  await shoppingCart.populate('customer cartItem').execPopulate()
+  await shoppingCart.populate('customer cartItems').execPopulate()
   res.status(201).json({ shoppingCart })
 })
 
