@@ -11,7 +11,7 @@ export default function DashboardStatGrid() {
   const [items, SetItems] = useState([])
   const [categoryReach, SetCategoryReach] = useState([])
   const [itemReachs, SetItemReach] = useState([])
-  const [revenues, SetRevenue] = useState([])
+  const [revenue, SetRevenue] = useState([])
 
   const [data, setData] = useState({
     categoryReachObject: [],
@@ -96,7 +96,7 @@ export default function DashboardStatGrid() {
       axios
         .get('http://localhost:4000/api/v1/totalSales')
         .then((res) => {
-          SetRevenue(res.data)
+          SetRevenue(res.data.total_sales[0])
         })
         .catch((err) => {
           alert(err.message)
@@ -137,13 +137,12 @@ export default function DashboardStatGrid() {
           </div>
           <div className="pl-4">
             <span className="text-sm text-gray-500 font-light">
-              Total Expenses
+              Total Revenue
             </span>
             <div className="flex items-center">
               <strong className="text-xl text-gray-700 font-semibold">
-                $3423
+                LKR {revenue.total_sales}.00
               </strong>
-              <span className="text-sm text-green-500 pl-2">-343</span>
             </div>
           </div>
         </BoxWrapper>

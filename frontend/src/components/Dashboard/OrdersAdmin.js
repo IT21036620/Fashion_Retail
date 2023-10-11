@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import * as XLSX from 'xlsx'
 
@@ -105,12 +106,21 @@ export default function OrdersAdmin() {
                 <td>{item.price}</td>
                 <td>{item.size}</td>
                 <td>
-                  <button
-                    onClick={exportToExcel}
+                  <Link
+                    class="hover:no-underline"
+                    to={`/seller/update-product/${item._id}`}
+                  >
+                    <div class="bg-blue-500 text-white px-4 py-2 rounded">
+                      Update
+                    </div>
+                  </Link>
+
+                  {/* <button
+                    to={`/seller/update-product/${item._id}`}
                     className="bg-blue-500 text-white px-4 py-2 rounded "
                   >
                     Edit
-                  </button>
+                  </button> */}
                   <br></br>
                   <button
                     onClick={() => handleRemoveItem(item._id)}
