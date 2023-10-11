@@ -1,5 +1,6 @@
 import Item from '../models/item.js'
 import Recommendation from '../models/recommendation.js'
+import ItemPurchase from '../models/ItemPurchase.js'
 import asyncWrapper from '../middleware/async.js'
 import cloudinary from '../config/cloudinary.js'
 import { createCustomError } from '../errors/custom-error.js'
@@ -26,6 +27,8 @@ const createItem = asyncWrapper(async (req, res) => {
     description,
     clothing_type,
     size,
+    cost,
+    available_quantity,
   } = req.body
   const file = req.file
 
@@ -43,6 +46,8 @@ const createItem = asyncWrapper(async (req, res) => {
       description,
       clothing_type,
       size,
+      cost,
+      available_quantity,
       image: image, // Assign the single image URL directly
     })
 
@@ -57,6 +62,17 @@ const createItem = asyncWrapper(async (req, res) => {
       })
 
       await newRecommendation.save()
+    } catch (error) {
+      console.error(error)
+    }
+
+    // create a new itemPurchase with checking image file
+    try {
+      const newItemPurchase = new ItemPurchase({
+        item,
+      })
+
+      await newItemPurchase.save()
     } catch (error) {
       console.error(error)
     }
@@ -84,12 +100,16 @@ const deleteItem = asyncWrapper(async (req, res, next) => {
   const { id: itemID } = req.params
   const item = await Item.findOneAndDelete({ _id: itemID })
   const recommendation = await Recommendation.findOneAndDelete({ item: itemID })
+  const itemPurchase = await ItemPurchase.findOneAndDelete({ item: itemID })
   if (!item) {
     return next(createCustomError(`No item with id: ${itemID}`, 404))
   }
-  if (!recommendation) {
+  if (!recommendation || !itemPurchase) {
     return next(
-      createCustomError(`No recommendation with item id: ${itemID}`, 404)
+      createCustomError(
+        `No recommendation or item purchase with item id: ${itemID}`,
+        404
+      )
     )
   }
   res.status(200).json({ item })

@@ -26,7 +26,7 @@ const ItemSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      required: [true, 'must provide product category'],
+      required: [true, 'must provide item category'],
       trim: true,
       enum: {
         values: [
@@ -91,6 +91,22 @@ const ItemSchema = new mongoose.Schema(
     rate_aggregate: {
       type: Number,
       default: 0.0,
+    },
+    cost: {
+      type: Number,
+      required: [true, 'must provide item cost'],
+      min: [
+        0,
+        'item cost should be more than 0, {VALUE} is not greater than 0',
+      ],
+    },
+    available_quantity: {
+      type: Number,
+      required: [true, 'must provide product price'],
+      min: [
+        0,
+        'available quantity should be more than 0, {VALUE} is not greater than 0',
+      ],
     },
   },
   { timestamps: true }

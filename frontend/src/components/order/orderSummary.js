@@ -107,7 +107,7 @@ export default function OrderSummary() {
       </div>
       <button
         onClick={handleCheckout}
-        class="bg-green-600 text-white px-4 py-2 mt-4 rounded hover:bg-green-700 h-11 w-80"
+        class="bg-[#018083] text-white px-4 py-2 mt-4 rounded hover:bg-[#018083] h-11 w-80"
       >
         Checkout
       </button>

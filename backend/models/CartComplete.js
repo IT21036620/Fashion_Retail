@@ -2,9 +2,9 @@ import mongoose from 'mongoose'
 
 const CartCompleteSchema = new mongoose.Schema(
   {
-    userID: {
-      type: String,
-      // ref: 'User',
+    customer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Customer',
       required: true,
     },
 

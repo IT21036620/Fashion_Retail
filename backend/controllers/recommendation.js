@@ -22,9 +22,11 @@ const updateRecommendation = asyncWrapper(async (req, res, next) => {
 const getAllRecommendations = async (req, res, next) => {
   try {
     // get all recommendations and sort them by reach_count in desc
-    const recommendations = await Recommendation.find().sort({
-      reach_count: -1,
-    })
+    const recommendations = await Recommendation.find()
+      .sort({
+        reach_count: -1,
+      })
+      .populate('item')
 
     if (recommendations.length === 0) {
       return next(createCustomError(`No recommendations`, 404))
@@ -36,4 +38,17 @@ const getAllRecommendations = async (req, res, next) => {
   }
 }
 
-export { getAllRecommendations, updateRecommendation }
+// This is used to retriew cart items that matches the loged userid
+const getItemRechByItemId = asyncWrapper(async (req, res, next) => {
+  const { id: itemId } = req.params
+  const recommendation = await Recommendation.find({ item: itemId }).populate(
+    'item'
+  )
+
+  if (!recommendation) {
+    return next(createCustomError(`No item with id: ${itemId}`, 404))
+  }
+  res.status(200).json({ recommendation })
+})
+
+export { getAllRecommendations, updateRecommendation, getItemRechByItemId }
