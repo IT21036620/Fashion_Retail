@@ -67,7 +67,7 @@ const SearchForm = () => {
             ></input>
             <button
               type="submit"
-              class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-[rgb(33,190,33)] rounded-r-lg border border-[rgb(33,190,33)] hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-[rgb(33,190,33)] dark:hover:bg-green-700 dark:focus:ring-[rgb(33,190,33)]"
+              class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-[#018083] rounded-r-lg border border-[#018083] hover:bg-[#018083] focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-[rgb(33,190,33)] dark:hover:bg-[#018083] dark:focus:ring-[rgb(33,190,33)]"
             >
               <svg
                 aria-hidden="true"
