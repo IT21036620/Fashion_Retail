@@ -3,7 +3,8 @@ import Layout from '../pages/Layout'
 import Dashboard from '../components/Dashboard/Dashboard'
 import Sellers from '../components/Dashboard/Sellers'
 import Customers from '../components/Dashboard/AllCustomers'
-import ViewOrder from '../components/Dashboard/ViewOrder'
+import Orders from '../components/Dashboard/Orders'
+import OrdersAdmin from '../components/Dashboard/OrdersAdmin'
 import RequireAuth from '../components/login/RequireAuth'
 
 export default function adminRoutes() {
@@ -13,8 +14,9 @@ export default function adminRoutes() {
       <Route path="/admin" element={<Layout />}>
         <Route index element={<Dashboard />} />
         <Route path="sellers" element={<Sellers />} />
+        <Route path="OrdersAdmin" element={<OrdersAdmin />} />
         <Route path="customers" element={<Customers />} />
-        <Route path="order" element={<ViewOrder />} />
+        <Route path="orders" element={<Orders />} />
       </Route>
       {/* </Route> */}
     </Routes>

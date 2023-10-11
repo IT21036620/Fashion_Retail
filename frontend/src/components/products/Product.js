@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const handelrecommandation = (itemId) => {
   axios
-    .patch(`http://localhost:4000/api/v1/recommendations/${itemId}`)
+    .patch(`http://localhost:4000/api/v1/item-reach/${itemId}`)
     .then((res) => {
       console.log(res.data.message)
     })
@@ -61,7 +61,7 @@ const Product = ({
           <Link
             class="hover:no-underline"
             to={`/item/${id}`}
-            onClick={handelrecommandation}
+            onClick={() => handelrecommandation(id)}
           >
             <div class="w-[125px] font-sans bg-[rgb(33,190,33)] hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
               View Details

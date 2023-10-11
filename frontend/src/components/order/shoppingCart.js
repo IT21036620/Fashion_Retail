@@ -68,7 +68,7 @@ export default function ShoppingCart() {
   useEffect(() => {
     function getCarts() {
       axios
-        .get('http://localhost:4000/api/v1/cart')
+        .get('http://localhost:4000/api/v1/cart/652630967c05565ff4d7687e')
         .then((res) => {
           console.log(res.data.carts)
           SetCarts(

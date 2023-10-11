@@ -1,6 +1,7 @@
 import React from 'react'
 import { useGlobalContext } from '../../pages/products/context'
 import './component.css'
+import axios from 'axios'
 
 const SearchForm = () => {
   const { setSearchTerm, setSearchCat } = useGlobalContext()
@@ -11,6 +12,23 @@ const SearchForm = () => {
     searchValue.current.focus()
   }, [])
 
+  const searchCat = () => {
+    const selectedCategory = searchCatVal.current.value
+    setSearchCat(selectedCategory)
+    handelrecommandation(selectedCategory) // Calling the function with the selected category
+  }
+
+  const handelrecommandation = (category) => {
+    axios
+      .patch(`http://localhost:4000/api/v1/category-reach/${category}`) // Assuming category is what your API expects
+      .then((res) => {
+        console.log(res.data.message)
+      })
+      .catch((err) => {
+        alert(err.message)
+      })
+  }
+
   React.useEffect(() => {
     searchCatVal.current.focus()
   }, [])
@@ -19,9 +37,9 @@ const SearchForm = () => {
     setSearchTerm(searchValue.current.value)
   }
 
-  const searchCat = () => {
-    setSearchCat(searchCatVal.current.value)
-  }
+  // const searchCat = () => {
+  //   setSearchCat(searchCatVal.current.value)
+  // }
 
   const handleSubmit = (e) => {
     e.preventDefault()

@@ -22,6 +22,22 @@ export default function OrdersAdmin() {
     getItems()
   }, [])
 
+  const handleRemoveItem = (itemId) => {
+    const confirmDelete = window.confirm(
+      'Are you sure you want to remove this item?'
+    )
+    if (confirmDelete) {
+      axios
+        .delete(`http://localhost:4000/api/v1/items/${itemId}`)
+        .then((res) => {
+          console.log(res.data.message)
+        })
+        .catch((err) => {
+          alert(err.message)
+        })
+    }
+  }
+
   const exportToExcel = () => {
     const ws = XLSX.utils.json_to_sheet(items)
     const wb = XLSX.utils.book_new()
@@ -58,8 +74,10 @@ export default function OrdersAdmin() {
               <th>Clothing Type</th>
               <th>Item Manufacturer</th>
               <th>Description</th>
+              <th>Cost</th>
               <th>Price</th>
               <th>Sizes</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -83,8 +101,24 @@ export default function OrdersAdmin() {
                 <td>{item.clothing_type}</td>
                 <td>{item.manufacturer}</td>
                 <td>{item.description}</td>
+                <td>{item.description}</td>
                 <td>{item.price}</td>
                 <td>{item.size}</td>
+                <td>
+                  <button
+                    onClick={exportToExcel}
+                    className="bg-blue-500 text-white px-4 py-2 rounded "
+                  >
+                    Edit
+                  </button>
+                  <br></br>
+                  <button
+                    onClick={() => handleRemoveItem(item._id)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded mt-1 "
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
