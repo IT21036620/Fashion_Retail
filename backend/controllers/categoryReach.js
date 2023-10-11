@@ -50,7 +50,7 @@ const getCategoryReachByCategory = asyncWrapper(async (req, res, next) => {
   })
 
   if (!categoryReachObject) {
-    return next(createCustomError(`No CategoryReach with id: ${userId}`, 404))
+    return next(createCustomError(`No CategoryReach with id: ${category}`, 404))
   }
   res.status(200).json({ categoryReachObject })
 })
