@@ -13,6 +13,7 @@ import recommendationRouter from './routes/recommendation.js'
 import customerRouter from './routes/customer.js'
 import adminRouter from './routes/admin.js'
 import analytics from './routes/analytics.js'
+import categoryReach from './routes/categoryReach.js'
 
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandlerMiddleware from './middleware/error-handler.js'
@@ -49,6 +50,7 @@ app.use('/api/v1/recommendations', recommendationRouter)
 app.use('/api/v1/customer', customerRouter)
 app.use('/api/v1/admin', adminRouter)
 app.use('/api/v1/analytics', analytics)
+app.use('/api/v1/category-reach', categoryReach)
 // app.use('/api/v1/seller', sellerRouter)
 
 // Error handling middleware
