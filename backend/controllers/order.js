@@ -18,46 +18,48 @@ const getAllOrders = asyncWrapper(async (req, res) => {
 })
 
 // This is used to add a new order
-const createOrder = asyncWrapper(async (req, res) => {
-  const order = await Order.create(req.body)
-  res.status(201).json({ order })
+const createOrder = asyncWrapper(async (req, res, next) => {
+  try {
+    const order = await Order.create(req.body)
 
-  // increment item purchase count by purchase quantity
-  for (const cartItem of order.cartComplete.items) {
-    const item = cartItem.item.id
-    const quantity = cartItem.quantity
+    // // Increment item purchase count by purchase quantity
+    // for (const cartItem of order.cartComplete.items.items) {
+    //   const item = cartItem.item.id
+    //   const quantity = cartItem.quantity
 
-    try {
-      const itemPurchase = await ItemPurchase.findOneAndUpdate(
-        { item: item },
-        { $inc: { purchase_count: quantity } },
-        { new: true }
-      )
-      if (!itemPurchase) {
-        return next(createCustomError(`No item purchase with id: ${item}`, 404))
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+    //   try {
+    //     await ItemPurchase.findOneAndUpdate(
+    //       { item: item },
+    //       { $inc: { purchase_count: quantity } },
+    //       { new: true }
+    //     )
+    //   } catch (error) {
+    //     console.error(error)
+    //   }
+    // }
 
-  // increment category purchase count by purchase quantity
-  for (const cartItem of order.cartComplete.items) {
-    const category = cartItem.item.category
-    const quantity = cartItem.quantity
+    // // Increment category purchase count by purchase quantity
+    // for (const cartItem of order.cartComplete.items.items) {
+    //   const category = cartItem.item.category
+    //   const quantity = cartItem.quantity
 
-    try {
-      const categoryPurchase = await CategoryPurchase.findOneAndUpdate(
-        { category: category },
-        { $inc: { purchase_count: quantity } },
-        { new: true }
-      )
-      if (!categoryPurchase) {
-        return next(createCustomError(`No category with id: ${item}`, 404))
-      }
-    } catch (error) {
-      console.error(error)
-    }
+    //   try {
+    //     await CategoryPurchase.findOneAndUpdate(
+    //       { category: category },
+    //       { $inc: { purchase_count: quantity } },
+    //       { new: true }
+    //     )
+    //   } catch (error) {
+    //     console.error(error)
+    //   }
+    // }
+
+    // Populate order and send the response
+    await order.populate('cartComplete customer').execPopulate()
+    res.status(201).json({ order })
+  } catch (error) {
+    console.error(error)
+    return next(createCustomError('Unable to create order', 500))
   }
 })
 
