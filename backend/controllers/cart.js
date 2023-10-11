@@ -7,7 +7,11 @@ dotenv.config()
 
 // This is used to retriew all cart items
 const getAllCartItems = asyncWrapper(async (req, res) => {
-  const items = await Cart.find({}).populate('item')
+  const items = await Cart.find({})
+    .sort({
+      updatedAt: 1,
+    })
+    .populate('item')
   res.status(200).json({ items })
 })
 
@@ -32,10 +36,10 @@ const generateCommission = asyncWrapper(async (req, res) => {
 
 // This is uesed for create cart record when tempory cart is delated after payment
 const insertcartcompletedetails = asyncWrapper(async (req, res) => {
-  const userID = req.body.userID
+  const customer = req.body.customer
 
   // First, find all the items in the Cart that match the given userID
-  const itemsInCart = await Cart.find({ user: userID }).populate(
+  const itemsInCart = await Cart.find({ customer: customer }).populate(
     'item',
     'price'
   )
@@ -53,7 +57,7 @@ const insertcartcompletedetails = asyncWrapper(async (req, res) => {
 
   // Create a new CartComplete item with the same userID and products as in the Cart
   const cartCompleteItem = new CartComplete({
-    userID: userID,
+    customer: customer,
     items: itemsarray,
     totalprice: parseInt(totalPrice),
   })
@@ -62,7 +66,7 @@ const insertcartcompletedetails = asyncWrapper(async (req, res) => {
   await cartCompleteItem.save()
   const cart_id = cartCompleteItem._id
   // Delete all items in the Cart that match the given userID
-  await Cart.deleteMany({ user: userID })
+  await Cart.deleteMany({ customer: customer })
 
   // Send the response
   res.status(201).json({ cart_id })
@@ -71,7 +75,7 @@ const insertcartcompletedetails = asyncWrapper(async (req, res) => {
 // This is used to retriew cart items that matches the loged userid
 const getCartItemsbycusid = asyncWrapper(async (req, res, next) => {
   const { id: userId } = req.params
-  const items = await Cart.find({ user: userId })
+  const items = await Cart.find({ customer: userId })
 
   if (!items) {
     return next(createCustomError(`No Cart item with id: ${userId}`, 404))
@@ -103,7 +107,7 @@ const updateCartItems = asyncWrapper(async (req, res) => {
     return next(createCustomError(`No Order with this id: ${cartID}`, 404))
   }
 
-  res.status(200).json({ order })
+  res.status(200).json({ item })
 })
 
 // This is used to delete single item from the cart
