@@ -102,7 +102,7 @@ export default function OrdersAdmin() {
                 <td>{item.clothing_type}</td>
                 <td>{item.manufacturer}</td>
                 <td>{item.description}</td>
-                <td>{item.description}</td>
+                <td>{item.cost}</td>
                 <td>{item.price}</td>
                 <td>{item.size}</td>
                 <td>
