@@ -197,10 +197,14 @@ export default function DashboardStatGrid() {
 
       <div className="flex mt-4 gap-4">
         {/* Pie Chart */}
+        <strong className="text-gray-700 font-medium">
+          Top Reached Categories
+        </strong>
         <div
           id="pieChartDiv"
           className="flex-1 flex justify-center items-center h-[400px] w-[500px]"
         >
+          {' '}
           <PieChartComponent data={data} />
         </div>
 
