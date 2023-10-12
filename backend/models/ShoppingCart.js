@@ -22,6 +22,10 @@ const ShoppingCartSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    abandoned: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   { timestamps: true }
