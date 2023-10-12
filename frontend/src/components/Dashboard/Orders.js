@@ -9,7 +9,7 @@ export default function Orders() {
   useEffect(() => {
     function getOrders() {
       axios
-        .get('http://localhost:4000/api/v1/order')
+        .get('http://localhost:4000/api/v1/cartcomplete')
         .then((res) => {
           SetOrders(res.data.orders)
         })

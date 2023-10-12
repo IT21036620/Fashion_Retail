@@ -20,6 +20,7 @@ import categoryPurchaseRouter from './routes/categoryPurchase.js'
 import shoppingCartRouter from './routes/shoppingCart.js'
 import totalSalesRouter from './routes/totalSales.js'
 import ItemPerformance from './routes/itemPerformance.js'
+import paymentRouter from './routes/payments.js'
 
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandlerMiddleware from './middleware/error-handler.js'
@@ -63,6 +64,7 @@ app.use('/api/v1/category-purchase', categoryPurchaseRouter)
 app.use('/api/v1/shoppingCart', shoppingCartRouter)
 app.use('/api/v1/totalSales', totalSalesRouter)
 app.use('/api/v1/iperformance', ItemPerformance)
+app.use('/api/v1/payment', paymentRouter)
 
 // Error handling middleware
 app.use(notFoundMiddleware)
