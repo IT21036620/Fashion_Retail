@@ -9,6 +9,12 @@ const updateProductUrl = 'http://localhost:4000/api/v1/items'
 const UpdateProduct = () => {
   const { id } = useParams()
   const location = useLocation()
+
+  const itemData = location.state?.itemData
+
+  // Now you have access to itemData in this component
+  console.log(itemData)
+
   const [item_name, setItem_name] = useState(location.state?.item_name || '')
   const [manufacturer, setManufacturer] = useState(
     location.state?.manufacturer || ''

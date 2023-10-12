@@ -13,7 +13,7 @@ import ProductReviewList from '../../components/Reviews/productReviews'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const url = 'http://localhost:4000/api/v1/items/'
-const productRating = 'localhost:4000/api/v1/items/productRating/'
+const productRating = 'http://localhost:4000/api/v1/items/itemRating/'
 const sellerRating = 'http://localhost:3008/api/v1/seller/sellerRating/'
 const sellerUrl = 'http://localhost:3008/api/v1/seller/'
 const cartUrl = 'http://localhost:4000/api/v1/cart'
@@ -275,14 +275,14 @@ const SingleProduct = () => {
                 </p>
               </div>
             </li>
-            <li class=" flex items-center ">
+            {/* <li class=" flex items-center ">
               <p class="text-base leading-4 text-gray-800 ">Seller Rating</p>
               <div class="flex items-center justify-center">
                 <p class="text-base leading-none text-gray-800 uppercase">
                   : {newSellerRating}/5 ({sRateCount})
                 </p>
               </div>
-            </li>
+            </li> */}
           </ul>
 
           {/* <div class="py-4 border-b border-green-400 flex items-center justify-between">
