@@ -5,23 +5,53 @@ import useAuth from '../../hooks/useAuth'
 import * as XLSX from 'xlsx'
 
 export default function ItemPerformance() {
-  const [items, SetItems] = useState([])
+  //const [items, SetItems] = useState([])
   const { auth } = useAuth()
 
+  const [items, setItems] = useState([]);
+
   useEffect(() => {
-    function getItems() {
-      axios
-        .get('http://localhost:4000/api/v1/items')
-        .then((res) => {
-          SetItems(res.data.items)
-        })
-        .catch((err) => {
-          alert(err.message)
-        })
+    async function fetchData() {
+      try {
+        const itemsResponse = await axios.get('http://localhost:4000/api/v1/items');
+        const itemsData = itemsResponse.data.items;
+
+        for (let item of itemsData) {
+           const analyticsResponse = await axios.get(`http://localhost:4000/api/v1/analytics/predictPR/${item._id}`);
+           item.predictedPurchases = analyticsResponse.data.predictedPurchases;
+
+          const performanceResponse = await axios.get(`http://localhost:4000/api/v1/iperformance/${item._id}`);
+          item.addToCartCount = performanceResponse.data.data.addToCartCount;
+          item.cartAbandonmentCount = performanceResponse.data.data.cartAbandonmentCount;
+          item.completedPurchasesCount = performanceResponse.data.data.completedPurchasesCount;
+          console.log(performanceResponse)
+        }
+
+        setItems(itemsData);
+      } catch (error) {
+        alert(error.message);
+      }
     }
 
-    getItems()
-  }, [])
+    fetchData();
+  }, []);
+
+//   useEffect(() => {
+//     function getItems() {
+//       axios
+//         .get('http://localhost:4000/api/v1/items')
+//         .then((res) => {
+//           SetItems(res.data.items)
+//         })
+//         .catch((err) => {
+//           alert(err.message)
+//         })
+//     }
+
+//     getItems()
+//   }, [])
+
+  
 
   const exportToExcel = () => {
     const ws = XLSX.utils.json_to_sheet(items)
@@ -75,11 +105,11 @@ export default function ItemPerformance() {
                   </div>
                 </td>
                 <td>{item.category}</td>
-                <td>{item.clothing_type}</td>
-                <td>{item.manufacturer}</td>
+                <td>{item.addToCartCount}</td>
+                <td>{item.cartAbandonmentCount}</td>
                 <td>{item.rate_count}</td>
-                <td>{item.description}</td>
-                <td>{item.price}</td>
+                <td>{item.predictedPurchases}</td>
+                <td>{item.completedPurchasesCount}</td>
               </tr>
             ))}
           </tbody>
