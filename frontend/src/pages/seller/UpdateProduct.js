@@ -4,22 +4,22 @@ import axios from 'axios'
 import { useLocation, useParams } from 'react-router-dom'
 import Navbar from '../../components/navbar'
 
-const updateProductUrl = 'http://localhost:3008/api/v1/products'
+const updateProductUrl = 'http://localhost:4000/api/v1/items'
 
 const UpdateProduct = () => {
   const { id } = useParams()
   const location = useLocation()
-  const [product_name, setProduct_name] = useState(location.state.product_name)
+  const [item_name, setItem_name] = useState(location.state.item_name)
   const [manufacturer, setManufacturer] = useState(location.state.manufacturer)
   const [price, setPrice] = useState(location.state.price)
-  const [package_quantity, setPackage_quantity] = useState(
-    location.state.package_quantity
-  )
-  const [shipping_weight, setShipping_weight] = useState(
-    location.state.shipping_weight
-  )
-  const [availability, setAvailability] = useState(location.state.availability)
+  // const [package_quantity, setPackage_quantity] = useState(
+  //   location.state.package_quantity
+  // )
+  const [size, setSize] = useState(location.state.size)
   const [category, setCategory] = useState(location.state.category)
+  const [clothing_type, setClothing_type] = useState(
+    location.state.clothing_type
+  )
   const [image, setImage] = useState(location.state.image)
   const [description, setDescription] = useState(location.state.description)
 
@@ -29,12 +29,12 @@ const UpdateProduct = () => {
     e.preventDefault()
 
     const formData = new FormData()
-    formData.append('product_name', product_name)
+    formData.append('item_name', item_name)
     formData.append('manufacturer', manufacturer)
     formData.append('price', price)
-    formData.append('package_quantity', package_quantity)
-    formData.append('shipping_weight', shipping_weight)
     formData.append('category', category)
+    formData.append('size', size)
+    formData.append('clothing_type', clothing_type)
     formData.append('description', description)
     formData.append('image', image)
 
@@ -87,13 +87,13 @@ const UpdateProduct = () => {
                 <div className="details-personal">
                   <div className="fields">
                     <div className="input-field">
-                      <label htmlFor="product_name">Product Name</label>
+                      <label htmlFor="product_name">Item Name</label>
                       <input
                         type="text"
                         name="product_name"
                         id="product_name"
-                        value={product_name}
-                        onChange={(e) => setProduct_name(e.target.value)}
+                        value={item_name}
+                        onChange={(e) => setItem_name(e.target.value)}
                         placeholder="Update Product Name"
                       ></input>
                     </div>
@@ -124,40 +124,31 @@ const UpdateProduct = () => {
                     </div>
 
                     <div className="input-field">
-                      <label htmlFor="package_quantity">Package Quantity</label>
-                      <input
-                        type="number"
-                        name="package_quantity"
-                        id="package_quantity"
-                        value={package_quantity}
-                        onChange={(e) => setPackage_quantity(e.target.value)}
-                        placeholder="Update Package Quantity"
-                        min={1}
-                      ></input>
-                    </div>
-
-                    <div className="input-field">
-                      <label htmlFor="shipping_weight">Shipping Weight</label>
-                      <input
-                        type="text"
-                        name="shipping_weight"
-                        id="shipping_weight"
-                        value={shipping_weight}
-                        onChange={(e) => setShipping_weight(e.target.value)}
-                        placeholder="Update Shipping Weight in g/kg"
-                      ></input>
-                    </div>
-
-                    <div className="input-field">
-                      <label htmlFor="availability">Product Availability</label>
+                      <label htmlFor="category">Size</label>
                       <select
-                        name="availability"
-                        id="availability"
-                        value={availability}
-                        onChange={(e) => setAvailability(e.target.value)}
+                        name="size"
+                        id="size"
+                        value={size}
+                        onChange={(e) => setSize(e.target.value)}
+                        required
                       >
-                        <option value="true">Available</option>
-                        <option value="false">Sold-Out</option>
+                        <option
+                          class="text-gray-400"
+                          value=""
+                          disabled
+                          defaultValue={'Choose a Size'}
+                          hidden
+                        >
+                          Choose a Size
+                        </option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                        <option value="3XL">3XL</option>
+                        <option value="4XL">4XL</option>
                       </select>
                     </div>
 
@@ -168,22 +159,65 @@ const UpdateProduct = () => {
                         id="category"
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
+                        required
                       >
-                        <option value="Supplements & Herbs">
-                          Supplements and Herbs
+                        <option
+                          class="text-gray-400"
+                          value=""
+                          disabled
+                          defaultValue={'Choose a Category'}
+                          hidden
+                        >
+                          Choose a Category
                         </option>
-                        <option value="Sports Nutrition">
-                          Sports Nutrition
-                        </option>
-                        <option value="Beauty">Beauty</option>
-                        <option value="Bath & Personal Care">
-                          Bath and Personal Care
-                        </option>
-                        <option value="Grocery">Grocery</option>
-                        <option value="Home">Home</option>
-                        <option value="Pets">Pets</option>
-                        <option value="Babies & Kids">Babies and Kids</option>
+                        <option value="Tshirts">Tshirts</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Shorts">Shorts</option>
+                        <option value="Plus Size">Plus Size</option>
+                        <option value="Hoodies">Hoodies</option>
+                        <option value="Jackets">Jackets</option>
+                        <option value="Pants">Pants</option>
+                        <option value="Underwear">Underwear</option>
+                        <option value="Socks">Socks</option>
                       </select>
+                    </div>
+
+                    <div className="input-field">
+                      <label htmlFor="category">Clothing Type</label>
+                      <select
+                        name="category"
+                        id="category"
+                        value={clothing_type}
+                        onChange={(e) => setClothing_type(e.target.value)}
+                        required
+                      >
+                        <option
+                          class="text-gray-400"
+                          value=""
+                          disabled
+                          defaultValue={'Choose a Type'}
+                          hidden
+                        >
+                          Choose a Category
+                        </option>
+                        <option value="Men">Men</option>
+                        <option value="Women">Women</option>
+                        <option value="Unisex">Unisex</option>
+                      </select>
+                    </div>
+
+                    <div className="input-field-desc">
+                      <label htmlFor="description">Product Description</label>
+                      <div></div>
+                      <textarea
+                        type="text"
+                        name="description"
+                        id="description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Enter a Product Description"
+                        required
+                      ></textarea>
                     </div>
 
                     <div className="input-field">
@@ -198,19 +232,6 @@ const UpdateProduct = () => {
                         // onChange={fileChangedHandler}
                         placeholder="Upload New Product Image"
                       ></input>
-                    </div>
-
-                    <div className="input-field-desc">
-                      <label htmlFor="description">Product Description</label>
-                      <div></div>
-                      <textarea
-                        type="text"
-                        name="description"
-                        id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Update Product Description"
-                      ></textarea>
                     </div>
 
                     <button
