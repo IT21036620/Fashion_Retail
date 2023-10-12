@@ -107,6 +107,18 @@ const getCompelteCartItemsbycartid = asyncWrapper(async (req, res, next) => {
   res.status(200).json({ items })
 })
 
+const getAllCompletedCarts = asyncWrapper(async (req, res) => {
+  const orders = await CartComplete.find({})
+  // .populate({
+  //   path: 'cartComplete',
+  //   populate: {
+  //     path: 'items.item',
+  //   },
+  // })
+  // .populate('customer')
+  res.status(200).json({ orders, count: orders.length })
+})
+
 // This is used to update cart items
 const updateCartItems = asyncWrapper(async (req, res) => {
   const { id: cartID } = req.params
@@ -158,4 +170,5 @@ export {
   insertcartcompletedetails,
   generateCommission,
   getCompelteCartItemsbycartid,
+  getAllCompletedCarts,
 }

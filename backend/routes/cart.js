@@ -15,6 +15,7 @@ import {
   insertcartcompletedetails,
   generateCommission,
   getCompelteCartItemsbycartid,
+  getAllCompletedCarts,
 } from '../controllers/cart.js'
 
 router
@@ -30,7 +31,10 @@ router
   .get(getCartItemsbycusid) // Get all cart items by Customer id
 
 router.route('/commission').post(generateCommission) // Generate Commission
-router.route('/cartcomplete').post(insertcartcompletedetails) //insert temporary cart items to permanent record
+router
+  .route('/cartcomplete')
+  .post(insertcartcompletedetails) //insert temporary cart items to permanent record
+  .get(getAllCompletedCarts)
 router.route('/cartcomplete/:id').get(getCompelteCartItemsbycartid) //Get Complete cart by cart ID
 
 export default router
