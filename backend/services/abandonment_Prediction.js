@@ -30,10 +30,10 @@ const predictCartAbandonment = async (cartId) => {
 const isAbandonedPrediction = output.isAbandoned > 0.5;
 
 
-// if (isAbandonedPrediction && !cart.abandoned) { // Check if cart was not previously marked as abandoned
+
     cart.abandoned = isAbandonedPrediction;
     await cart.save();
-
+//if (isAbandonedPrediction && !cart.abandoned) { // Check if cart was not previously marked as abandoned
     // Update cartAbandonmentCount for each item in the cart
     for (let cartItem of cart.cartItems) {
         const performance = await ItemPerformance.findOne({ itemId: cartItem });
@@ -51,7 +51,7 @@ const isAbandonedPrediction = output.isAbandoned > 0.5;
             console.log("test2")
         }
     }
-// }
+ //}
 
     console.log(output)
     return {
