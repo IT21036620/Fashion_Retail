@@ -11,11 +11,11 @@ import predictCartAbandonment from '../services/abandonment_Prediction.js'
 router.get('/visitor-count', getVisitorCount)
 //router.get('/cart-abandonment-stats', cartAnalysis)
 
-router.post('/predictCA', (req, res) => {
+router.post('/predictCA', async (req, res) => {
     try {
-        const cartData = req.body;
-        const isAbandoned = predictCartAbandonment(cartData);
-        res.json({ isAbandoned });
+        const cartId = req.body.cartId;
+        const prediction = await predictCartAbandonment(cartId);
+        res.json(prediction);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
