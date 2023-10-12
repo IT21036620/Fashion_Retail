@@ -23,8 +23,26 @@ const createOrder = asyncWrapper(async (req, res, next) => {
   try {
     const order = await Order.create(req.body)
 
+    // Populate order and send the response
+    await order.populate('cartComplete customer').execPopulate()
+
+    const totalPrice = order.cartComplete.totalprice
+
+    // Update the TotalSales object to increment total_sales by totalPrice
+    const totalSalesUpdate = await TotalSales.findOneAndUpdate(
+      { _id: '65270f87c2e60011341d78da' },
+      { $inc: { total_sales: totalPrice } },
+      { new: true, runValidators: true }
+    )
+
+    if (!totalSalesUpdate) {
+      return next(
+        createCustomError('Unable to update total_sales in TotalSales', 500)
+      )
+    }
+
     // // Increment item purchase count by purchase quantity
-    // for (const cartItem of order.cartComplete.items.items) {
+    // for (const cartItem of order.cartComplete.items.item) {
     //   const item = cartItem.item.id
     //   const quantity = cartItem.quantity
 
@@ -40,7 +58,7 @@ const createOrder = asyncWrapper(async (req, res, next) => {
     // }
 
     // // Increment category purchase count by purchase quantity
-    // for (const cartItem of order.cartComplete.items.items) {
+    // for (const cartItem of order.cartComplete.items.item) {
     //   const category = cartItem.item.category
     //   const quantity = cartItem.quantity
 
@@ -55,24 +73,6 @@ const createOrder = asyncWrapper(async (req, res, next) => {
     //   }
     // }
 
-    // Populate order and send the response
-    await order.populate('cartComplete customer').execPopulate()
-
-    const totalPrice = order.cartComplete.totalprice
-    console.log('Total Price:', totalPrice)
-
-    // Update the TotalSales object to increment total_sales by totalPrice
-    const totalSalesUpdate = await TotalSales.findOneAndUpdate(
-      { _id: '65270f87c2e60011341d78da' },
-      { $inc: { total_sales: totalPrice } },
-      { new: true, runValidators: true }
-    )
-
-    if (!totalSalesUpdate) {
-      return next(
-        createCustomError('Unable to update total_sales in TotalSales', 500)
-      )
-    }
     res.status(201).json({ order })
   } catch (error) {
     console.error(error)
