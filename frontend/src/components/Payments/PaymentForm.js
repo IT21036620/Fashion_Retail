@@ -47,10 +47,13 @@ const PaymentForm = () => {
     if (error) {
       setError(error.message)
     } else {
-      const response = await axios.post('http://localhost:4000/api/payment', {
-        amount: TotalFinal * 100, // Set the amount you want to charge in cents
-        token: token,
-      })
+      const response = await axios.post(
+        'http://localhost:4000/api/v1/payment',
+        {
+          amount: TotalFinal * 100, // Set the amount you want to charge in cents
+          token: token,
+        }
+      )
 
       if (response.data.success) {
         setSuccess('Payment successful!')

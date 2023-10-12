@@ -22,12 +22,12 @@ const PieChartComponent = ({ data }) => {
       {
         data: reachCounts,
         backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56',
-          '#FF5733',
-          '#33FF57',
-          '#8533FF',
+          '#F47A1F',
+          '#FDBB2F',
+          '#377B2B',
+          '#7AC142',
+          '#007CC3',
+          '#00529B',
           '#FF3385',
           '#FF8F33',
           '#33FFF6',
