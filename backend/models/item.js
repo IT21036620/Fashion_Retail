@@ -94,7 +94,7 @@ const ItemSchema = new mongoose.Schema(
     },
     cost: {
       type: Number,
-      required: [true, 'must provide item cost'],
+      required: [false, 'must provide item cost'],
       min: [
         0,
         'item cost should be more than 0, {VALUE} is not greater than 0',
@@ -102,7 +102,7 @@ const ItemSchema = new mongoose.Schema(
     },
     available_quantity: {
       type: Number,
-      required: [true, 'must provide product price'],
+      required: [false, 'must provide product price'],
       min: [
         0,
         'available quantity should be more than 0, {VALUE} is not greater than 0',
