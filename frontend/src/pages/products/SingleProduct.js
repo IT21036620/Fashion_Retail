@@ -10,6 +10,8 @@ import Navbar from '../../components/navbar'
 import ReviewForm from '../../components/Reviews/createReviews'
 import ProductReviewList from '../../components/Reviews/productReviews'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 const url = 'http://localhost:4000/api/v1/items/'
 const productRating = 'localhost:4000/api/v1/items/productRating/'
 const sellerRating = 'http://localhost:3008/api/v1/seller/sellerRating/'
@@ -161,7 +163,7 @@ const SingleProduct = () => {
       const resp = await axios.post(
         cartUrl,
         {
-          user: '5',
+          customer: '652630967c05565ff4d7687e',
           item: id,
           quantity: quantity,
           price: totPrice,
@@ -183,10 +185,50 @@ const SingleProduct = () => {
 
   return (
     <div>
+      <div class="bg-white border-t border-b py-5">
+        <div class="container mx-auto flex justify-center space-x-8 text-sm">
+          <div class="flex items-center space-x-4">
+            <div class="bg-018083 w-8 h-8 rounded-full flex items-center justify-center">
+              <i class="fas fa-comments text-white"></i>
+            </div>
+            <div>
+              <div class="font-semibold">
+                NEWEST FASHION TRENDS FOR ALL ALIKE
+              </div>
+              <span class="text-gray-600">Contact us now online</span>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <div class="bg-018083 w-8 h-8 rounded-full flex items-center justify-center">
+              <i class="fas fa-plane text-white"></i>
+            </div>
+            <div>
+              <div class="font-semibold">
+                ISLAND WIDE & INTERNATIONAL DELIVERY
+              </div>
+              <span class="text-gray-600">
+                At your doorstep wherever you are, whenever you need
+              </span>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <div class="bg-018083 w-8 h-8 rounded-full flex items-center justify-center">
+              <i class="fas fa-star text-white"></i>
+            </div>
+            <div>
+              <div class="font-semibold">UNIQUE BRANDED CLOTHING</div>
+              <span class="text-gray-600">Incomparably Classy and Unique</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* <Navbar name="Sunil Perera" /> */}
       <div class="md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
         <div class="xl:w-2/6 lg:w-2/5 w-80 md:block hidden">
-          <img class="mt-[80px] w-full" alt={item_name} src={image} />
+          <img class=" w-full" alt={item_name} src={image} />
           <div className="mt-[40px] w-full max-w-md bg-white rounded-lg shadow-lg p-6 mb-2 mx-auto">
             <ProductReviewList productId={id} />
             <ReviewForm productId={id} buyerId="6442335c26c1890f7a771907" />
@@ -199,34 +241,50 @@ const SingleProduct = () => {
           <img class="w-[600px]" alt={product_name} src={image} />
         </div> */}
         <div class="xl:w-2/5 md:w-1/2 lg:ml-8 md:ml-6 md:mt-0 mt-6">
-          <div class="border-b border-green-400 pb-6">
-            <h1 class="mt-[20px] lg:text-3xl text-3xl font-semibold lg:leading-6 leading-7 text-gray-800 dark:text-white mt-2">
+          <div class="border-b  pb-6">
+            <h1 class="mt-[20px] lg:text-3xl text-3xl font-semibold lg:leading-6 leading-7 text-gray-800 uppercase  mt-2">
               {item_name}
             </h1>
-            <div class="mt-[20px] text-black dark:text-white">
+            <div class="mt-[20px] text-black ">
               <i>"{description}"</i>
             </div>
           </div>
-          <div class="py-4 border-b border-green-400 flex items-center justify-between">
-            <p class="text-base leading-4 text-gray-800 dark:text-gray-300">
-              Manufacturer
-            </p>
-            <div class="flex items-center justify-center">
-              <p class="text-base leading-none text-gray-600 dark:text-gray-300">
-                {manufacturer}
-              </p>
-            </div>
-          </div>
-          <div class="py-4 border-b border-green-400 flex items-center justify-between">
-            <p class="text-base leading-4 text-gray-800 dark:text-gray-300">
-              Category
-            </p>
-            <div class="flex items-center justify-center">
-              <p class="text-base leading-none text-gray-600 dark:text-gray-300">
-                {category}
-              </p>
-            </div>
-          </div>
+          <ul class="list-disc pl-5">
+            <li class="py-4 flex items-center">
+              <p class="text-base leading-4 text-gray-800 ">Manufacturer</p>
+              <div class="flex items-center ">
+                <p class="text-base leading-none text-gray-800 uppercase">
+                  : {manufacturer}
+                </p>
+              </div>
+            </li>
+            <li class=" flex items-center ">
+              <p class="text-base leading-4 text-gray-800 ">Category</p>
+              <div class="flex items-center justify-center">
+                <p class="text-base leading-none text-gray-800 uppercase">
+                  : {category}
+                </p>
+              </div>
+            </li>
+
+            <li class="py-4 flex items-center">
+              <p class="text-base leading-4 text-gray-800 "> Product Rating</p>
+              <div class="flex items-center ">
+                <p class="text-base leading-none text-gray-800 uppercase">
+                  : {rating}/5 ({rate_count})
+                </p>
+              </div>
+            </li>
+            <li class=" flex items-center ">
+              <p class="text-base leading-4 text-gray-800 ">Seller Rating</p>
+              <div class="flex items-center justify-center">
+                <p class="text-base leading-none text-gray-800 uppercase">
+                  : {newSellerRating}/5 ({sRateCount})
+                </p>
+              </div>
+            </li>
+          </ul>
+
           {/* <div class="py-4 border-b border-green-400 flex items-center justify-between">
             <p class="text-base leading-4 text-gray-800 dark:text-gray-300">
               Package Quantity
@@ -267,7 +325,7 @@ const SingleProduct = () => {
               </p>
             </div>
           </div> */}
-          <div class="py-4 border-b border-green-400 flex items-center justify-between">
+          {/* <div class="py-4 border-b border-green-400 flex items-center justify-between">
             <p class="text-base leading-4 text-gray-800 dark:text-gray-300">
               Product Rating
             </p>
@@ -286,8 +344,8 @@ const SingleProduct = () => {
                 {newSellerRating}/5 ({sRateCount})
               </p>
             </div>
-          </div>
-          <div class="py-4 border-b border-green-400 flex items-center jutify-between mt-[10px]">
+          </div> */}
+          <div class="py-4 border-b  flex items-center jutify-between mt-[10px]">
             <Grid container spacing={4}>
               <Grid item xs={12}>
                 <Button
@@ -350,12 +408,12 @@ const SingleProduct = () => {
               className="w-[127px] ml-[20px]"
             ></Input>
           </div>
-          <div class="py-4 border-b border-green-400 flex items-center justify-between mb-[30px]">
-            <p class="text-3xl leading-4 text-gray-800 dark:text-gray-300">
+          <div class="py-4 border-b  flex items-center justify-between mb-[10px]">
+            <p class="text-2xl leading-4 text-gray-800 ">
               <b>Price</b>
             </p>
             <div class="flex items-center justify-center">
-              <p class="text-3xl leading-none text-gray-800 dark:text-gray-300">
+              <p class="text-2xl leading-none text-gray-800 ">
                 <b>LKR {price}.00</b>
               </p>
             </div>
@@ -378,7 +436,7 @@ const SingleProduct = () => {
               </div>
               <div class="w-[187px]">
                 <Grid item xs={12}>
-                  <Typography className="quantity" variant="h4">
+                  <Typography className="quantity" variant="h6">
                     Quantity: {quantity}
                   </Typography>
                 </Grid>
@@ -403,8 +461,8 @@ const SingleProduct = () => {
               <div class="mt-[30px] flex items-center justify-center">
                 <Button
                   size="large"
-                  color="warning"
                   variant="contained"
+                  style={{ backgroundColor: '#018083', color: 'white' }}
                   onClick={addToCart}
                 >
                   <FaShoppingCart class="mr-[10px]" /> Add to cart

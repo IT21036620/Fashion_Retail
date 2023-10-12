@@ -21,9 +21,51 @@ export default function CartPage() {
         setpaymentsucces,
       }}
     >
-      <div class="bg-gray-100 px-6 py-5">
+      <div class="bg-gray-100 ">
+        <div class="bg-white border-t border-b py-5 mb-4">
+          <div class="container mx-auto flex justify-center space-x-8 text-sm">
+            <div class="flex items-center space-x-4">
+              <div class="bg-018083 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fas fa-comments text-white"></i>
+              </div>
+              <div>
+                <div class="font-semibold">
+                  NEWEST FASHION TRENDS FOR ALL ALIKE
+                </div>
+                <span class="text-gray-600">Contact us now online</span>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <div class="bg-018083 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fas fa-plane text-white"></i>
+              </div>
+              <div>
+                <div class="font-semibold">
+                  ISLAND WIDE & INTERNATIONAL DELIVERY
+                </div>
+                <span class="text-gray-600">
+                  At your doorstep wherever you are, whenever you need
+                </span>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <div class="bg-018083 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fas fa-star text-white"></i>
+              </div>
+              <div>
+                <div class="font-semibold">UNIQUE BRANDED CLOTHING</div>
+                <span class="text-gray-600">
+                  Incomparably Classy and Unique
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="flex">
-          <div class=" w-3/4 max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+          <div class=" w-3/4 max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden mb-6">
             <ShoppingCart />
 
             <details className="bg-gray-100 shadow rounded group p-1 mt-5 ">
@@ -64,7 +106,7 @@ export default function CartPage() {
             </div> */}
 
             <div class="pt-5">
-              <div class="max-w-ml mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
+              <div class="max-w-ml mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 mb-6">
                 <OrderSummary />
               </div>
             </div>

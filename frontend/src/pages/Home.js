@@ -121,7 +121,7 @@ const Home = () => {
       <LatestProducts />
       <InexpensiveProducts /> */}
       <HomeReview />
-      <section className="bg-[#fcf5f5] text-black py-6 h-[400px]">
+      {/* <section className="bg-[#fcf5f5] text-black py-6 h-[400px]">
         <div className="container mx-auto flex flex-col items-center justify-center h-full">
           <h2 className="text-4xl font-bold mb-4">
             Subscribe to our Newsletter
@@ -144,7 +144,7 @@ const Home = () => {
             </button>
           </form>
         </div>
-      </section>
+      </section> */}
       {/* <Footer /> */}
     </div>
   )
