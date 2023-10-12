@@ -14,6 +14,7 @@
   "dependencies": {
     "async": "^3.2.4",
     "bcryptjs": "^2.4.3",
+    "brain.js": "^2.0.0-beta.23",
     "cloudinary": "^1.36.2",
     "cors": "^2.8.5",
     "dotenv": "^8.6.0",

@@ -6,6 +6,7 @@ import Customers from '../components/Dashboard/AllCustomers'
 import Orders from '../components/Dashboard/Orders'
 import OrdersAdmin from '../components/Dashboard/OrdersAdmin'
 import RequireAuth from '../components/login/RequireAuth'
+import ItemPerformance from '../components/Dashboard/ItemPerformance'
 
 export default function adminRoutes() {
   return (
@@ -17,6 +18,7 @@ export default function adminRoutes() {
         <Route path="OrdersAdmin" element={<OrdersAdmin />} />
         <Route path="customers" element={<Customers />} />
         <Route path="orders" element={<Orders />} />
+        <Route path="iperformance" element={<ItemPerformance />} />
       </Route>
       {/* </Route> */}
     </Routes>

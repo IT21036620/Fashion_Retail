@@ -37,7 +37,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
   {
     key: 'transactions',
     label: 'Item Performance',
-    path: '/transactions',
+    path: '/admin/iperformance',
     icon: <HiOutlineDocumentText />,
   },
   // {
