@@ -1,5 +1,6 @@
 import brain from 'brain.js';
 import ShoppingCart from '../models/ShoppingCart.js';
+import ItemPerformance from '../models/itemPerformance.js';
 
 const net = new brain.NeuralNetwork();
 
@@ -28,9 +29,29 @@ const predictCartAbandonment = async (cartId) => {
 // Determine if the cart is abandoned based on the prediction
 const isAbandonedPrediction = output.isAbandoned > 0.5;
 
-// Update the cart's abandoned status in the database
-cart.abandoned = isAbandonedPrediction;
-await cart.save();
+
+// if (isAbandonedPrediction && !cart.abandoned) { // Check if cart was not previously marked as abandoned
+    cart.abandoned = isAbandonedPrediction;
+    await cart.save();
+
+    // Update cartAbandonmentCount for each item in the cart
+    for (let cartItem of cart.cartItems) {
+        const performance = await ItemPerformance.findOne({ itemId: cartItem });
+        if (performance) {
+            performance.cartAbandonmentCount += 1;
+            await performance.save();
+            console.log("test1")
+        } else {
+            // If no performance record exists for the item, create one
+            const newItemPerformance = new ItemPerformance({
+                itemId: cartItem,
+                cartAbandonmentCount: 1,
+            });
+            await newItemPerformance.save();
+            console.log("test2")
+        }
+    }
+// }
 
     console.log(output)
     return {
