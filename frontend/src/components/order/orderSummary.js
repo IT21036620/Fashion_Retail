@@ -52,18 +52,24 @@ export default function OrderSummary() {
 
     const custid = response
     const data2 = {
-      cartcomplete: '6442335c26c1890f7a771907',
       customer: '652630967c05565ff4d7687e',
+
+      cartComplete: '65269a5e64700d30b4fb15bf',
     }
 
-    const response2 = await axios.post(
-      'http://localhost:4000/api/v1/order',
-      data2
-    )
+    // const response2 = await axios.post(
+    //   'http://localhost:4000/api/v1/order',
+    //   data2
+    // )
 
-    if (response2.data) {
+    // if (response2.data) {
+    //   window.alert('Checkout successful!')
+    //   window.location.href = '/'
+    // }
+
+    if (response.data) {
       window.alert('Checkout successful!')
-      window.location.href = '/buyer/account'
+      window.location.href = '/'
     }
   }
 

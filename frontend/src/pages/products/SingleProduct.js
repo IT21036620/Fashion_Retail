@@ -377,7 +377,7 @@ const SingleProduct = () => {
               onChange={(e) => setNewRating(e.target.value)}
               className="w-[127px] mr-[20px]"
             ></Input>
-            <Grid container spacing={4}>
+            {/* <Grid container spacing={4}>
               <Grid item xs={12}>
                 <Button
                   size="small"
@@ -406,7 +406,7 @@ const SingleProduct = () => {
               value={rate_seller}
               onChange={(e) => setRate_seller(e.target.value)}
               className="w-[127px] ml-[20px]"
-            ></Input>
+            ></Input> */}
           </div>
           <div class="py-4 border-b  flex items-center justify-between mb-[10px]">
             <p class="text-2xl leading-4 text-gray-800 ">

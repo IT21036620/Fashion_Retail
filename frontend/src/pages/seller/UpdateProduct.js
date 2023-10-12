@@ -9,19 +9,21 @@ const updateProductUrl = 'http://localhost:4000/api/v1/items'
 const UpdateProduct = () => {
   const { id } = useParams()
   const location = useLocation()
-  const [item_name, setItem_name] = useState(location.state.item_name)
-  const [manufacturer, setManufacturer] = useState(location.state.manufacturer)
-  const [price, setPrice] = useState(location.state.price)
+  const [item_name, setItem_name] = useState(location.state?.item_name || '')
+  const [manufacturer, setManufacturer] = useState(
+    location.state?.manufacturer || ''
+  )
+  const [price, setPrice] = useState(location.state?.price)
   // const [package_quantity, setPackage_quantity] = useState(
   //   location.state.package_quantity
   // )
-  const [size, setSize] = useState(location.state.size)
-  const [category, setCategory] = useState(location.state.category)
+  const [size, setSize] = useState(location.state?.size)
+  const [category, setCategory] = useState(location.state?.category)
   const [clothing_type, setClothing_type] = useState(
-    location.state.clothing_type
+    location.state?.clothing_type
   )
-  const [image, setImage] = useState(location.state.image)
-  const [description, setDescription] = useState(location.state.description)
+  const [image, setImage] = useState(location.state?.image)
+  const [description, setDescription] = useState(location.state?.description)
 
   console.log(location.state)
 
@@ -70,6 +72,10 @@ const UpdateProduct = () => {
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0])
+  }
+
+  if (!location.state) {
+    return <div>Error: Item details not provided!</div>
   }
 
   return (

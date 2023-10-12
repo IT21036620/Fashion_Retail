@@ -5,6 +5,23 @@ import { Pie } from 'react-chartjs-2'
 import PieChartComponent from './PieChartComponent'
 import * as XLSX from 'xlsx'
 
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
+
+const exportChartToPDF = () => {
+  const input = document.getElementById('pieChartDiv')
+  html2canvas(input)
+    .then((canvas) => {
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF()
+      pdf.addImage(imgData, 'PNG', 0, 0)
+      pdf.save('download.pdf')
+    })
+    .catch((err) => {
+      console.error('Error exporting to PDF', err)
+    })
+}
+
 export default function DashboardStatGrid() {
   const [customers, SetCustomers] = useState([])
   const [orders, SetOrders] = useState([])
@@ -180,9 +197,19 @@ export default function DashboardStatGrid() {
 
       <div className="flex mt-4 gap-4">
         {/* Pie Chart */}
-        <div className="flex-1 flex justify-center items-center h-[400px] w-[500px]">
+        <div
+          id="pieChartDiv"
+          className="flex-1 flex justify-center items-center h-[400px] w-[500px]"
+        >
           <PieChartComponent data={data} />
         </div>
+
+        <button
+          onClick={exportChartToPDF}
+          className="bg-blue-500 text-white px-4 py-2 rounded h-[40px] w-[110px]"
+        >
+          Export PDF
+        </button>
 
         {/* Table */}
         <div className="flex-1 bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200">
